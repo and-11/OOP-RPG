@@ -13,7 +13,7 @@ protected:
     bool player;
 public:
 
-    Entity(const Entity& other) {
+    Entity(const Entity& other): name(other.name) {
         level = other.level;
         damage = other.damage;
         health = other.health;
@@ -22,7 +22,6 @@ public:
         coefficient_damage = other.coefficient_damage;
         coefficient_health = other.coefficient_health;
         player = other.player;
-        name = other.name;
     }
 
     Entity & operator=(const Entity& other) {

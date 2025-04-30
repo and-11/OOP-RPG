@@ -11,7 +11,7 @@ private:
 
 
 public:
-    void Add_level(Game x)
+    void Add_level(const Game &x)
     {
         levels.push_back( x );
     }
@@ -27,7 +27,7 @@ public:
 
             current_level->show_enemies();
             
-            while( 1 )
+            while( true )
             {
                 try{
                     int option = get_numeric_input();
@@ -47,7 +47,7 @@ public:
         std::cout << "Chose an enmy to view details about him:\n";
         current_level->show_enemies();
 
-        while( 1 )
+        while( true )
         {
             try{
                 int option = get_numeric_input();
@@ -66,14 +66,14 @@ public:
         std::cout << "Chose an item or press 0 to cancel:\n";
 
         std::shared_ptr<Item> current_item;
-        while( 1 )
+        while( true )
         {
             try{
                 int option = get_numeric_input();
                 if( option == 0 )                
                 {
                     std::cout << "\nPress 1 to attack or press 2 to use an item:\n";
-                    return 0;
+                    return false;
                 }
                 else
                 {
@@ -89,7 +89,7 @@ public:
         }
 
         std::cout <<  current_item->get_name() << ": Press 1 to use on a PLAYER and 2 to use on an ENEMY:\n";
-        while( 1 )
+        while( true )
         {
             try{
                 int option = get_numeric_input();   
@@ -98,12 +98,12 @@ public:
                     std::cout << "\nChose a Hero to use " << current_item->get_name() << " on:\n";
                     current_level->show_players();
                     
-                    while( 1 )
+                    while( true )
                     {
                         try{
-                            int option = get_numeric_input();
+                            int h_option = get_numeric_input();
                             
-                            current_level->count_item_use_player( current_item ,option);
+                            current_level->count_item_use_player( current_item ,h_option);
                             break;   
                         }  
                         catch( MyException &e ){
@@ -118,12 +118,12 @@ public:
                     std::cout << "\nChose an enemy  to use " << current_item->get_name() << " on:\n";
                     current_level->show_enemies();
                     
-                    while( 1 )
+                    while( true )
                     {
                         try{
-                            int option = get_numeric_input();
+                            int e_option = get_numeric_input();
                                                         
-                            current_level->count_item_use_enemy( current_item ,option);
+                            current_level->count_item_use_enemy( current_item ,e_option);
                             break;   
                         }  
                         catch( MyException &e ){
@@ -141,7 +141,7 @@ public:
         }
         
 
-        return 1;
+        return true ;
     }
     static void option_at_it_info()
     {
@@ -150,7 +150,7 @@ public:
     void chose_action( Game *current_level )
     {
         option_at_it_info();
-        while( 1 )
+        while( true )
         {
             try{
                 int option = get_numeric_input();
@@ -183,7 +183,7 @@ public:
     }
     void start()
     {
-        bool lose = 0;
+        bool lose = false ;
         for(auto i = std::size_t{0};i<levels.size();i++)
         {
             Game *current_level = &levels[i];
@@ -199,12 +199,12 @@ public:
             }
             if( current_level->is_game_lost() )
             {
-                lose = 1;
+                lose = true ;
                 break;
             }
             else if( i<levels.size()-1 )
             {
-                current_level->load();
+                Game::load();
                 current_level->game_transfer( levels[i+1] );
             }
         }
