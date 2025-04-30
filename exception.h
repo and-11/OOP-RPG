@@ -26,7 +26,7 @@ class Input_too_high: public MyException
 {
 public:
 	const char* what() const throw() override {
-		return "Input is too high!";				
+		return "Input is too high!";
 	}
 };
 class Input_Invalid: public MyException
