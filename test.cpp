@@ -20,9 +20,19 @@ public:
     }
 };
 
+[[nodiscard]] bool isSuccessful()
+{
+    return 1;
+}
+
+
 
 int main()
 {
+    if ( isSuccessful()) {
+    //  std::cout <<"da";
+    }
+
     Pereche xx;
     std::cin >>xx;
     xx.Afisare();
