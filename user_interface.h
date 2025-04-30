@@ -184,7 +184,7 @@ public:
     void start()
     {
         bool lose = 0;
-        for(int i=0;i<levels.size();i++)
+        for(auto i = std::size_t{0};i<levels.size();i++)
         {
             Game *current_level = &levels[i];
             current_level->prepare_fight();

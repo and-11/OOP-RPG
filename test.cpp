@@ -1,39 +1,15 @@
 #include <iostream>
+#include <typeinfo>
 
-std::string pasSTRING = "3feb";
-
-class Pereche{
-
-private:
-    std::string pas,usr;
-    int skip;
-public:
-    friend std::istream& operator>>(std::istream& os,Pereche & x) {
-
-        x.pas = pasSTRING;
-        x.usr = "andrei";
-        return os;
-    }    
-    void Afisare()
-    {
-        std::cout << usr << " " << pas << "\n";
-    }
-};
-
-[[nodiscard]] bool isSuccessful()
-{
-    return 1;
-}
+#include <vector>
+int main() {
 
 
+    int x = 5;
+    std::cout << typeid(x).name() << std::endl;
 
-int main()
-{
-    if ( isSuccessful()) {
-    //  std::cout <<"da";
-    }
+    std::vector<int> a;
+    std::cout << typeid( a.size() ).name() << std::endl;
 
-    Pereche xx;
-    std::cin >>xx;
-    xx.Afisare();
+
 }
