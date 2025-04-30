@@ -11,7 +11,6 @@ private:
 
 
 public:
-    void Quit(){return;}
     void Add_level(Game x)
     {
         levels.push_back( x );

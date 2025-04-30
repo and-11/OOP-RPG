@@ -1,9 +1,6 @@
 #pragma once
 
 #include "libraryes.h"
-#include "item.h"
-#include "potion.h"
-
 
 class Potion;
 
@@ -22,6 +19,8 @@ public:
         health = other.health;
         current_health = other.current_health;
         current_damage = other.current_damage;
+        coeficient_damage = other.coeficient_damage;
+        coeficient_health = other.coeficient_health;
         player = other.player;
         name = other.name;
     }
@@ -32,21 +31,22 @@ public:
         health = other.health;
         current_health = other.current_health;
         current_damage = other.current_damage;
+        coeficient_damage = other.coeficient_damage;
+        coeficient_health = other.coeficient_health;
         player = other.player;
         name = other.name;
        return *this;
     }
 
-    ~Entity() = default ; 
-
-
-
-
     Entity()
     {
+        current_health = 0;
+        current_damage = 0;
+        coeficient_damage = 0;
+        coeficient_health = 0;
         level = damage = health = 0;
         name = "Forgotten";
-        player =0;
+        player = false;
     }
     Entity(const int level,const int damage,const int health,const std::string name, const int c_damage, const int c_health )
     {
@@ -93,8 +93,8 @@ public:
             beg = "\033[32m";
         else 
             beg = "\033[31m";
-        ans = beg+std::to_string(current_damage)+end;
-        return ans;
+        return beg+std::to_string(current_damage)+end;
+
     }
     void recive_damage(int value)
     {
@@ -107,8 +107,7 @@ public:
         else 
             beg = "\033[31m";
 
-        ans = beg+ dude.get_name() + lvl + std::to_string(dude.level) + dmg + std::to_string(dude.current_damage) + hp + std::to_string(dude.current_health) +end;
-        os << ans;      /// fix
+        os << beg+ dude.get_name() + lvl + std::to_string(dude.level) + dmg + std::to_string(dude.current_damage) + hp + std::to_string(dude.current_health) +end;
         return os;
     }   
 
