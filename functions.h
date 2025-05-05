@@ -22,12 +22,18 @@ inline int getRandomNumber() {
     return distr(gen);
 }
 
+
+#include <fstream>
+std::ifstream fin("date_intrare.in");
+
+
 inline int get_numeric_input()
 {
     int option;
     while( true )
     {
-        std::cin >> option;
+        // std::cin >> option;                      ///             SWITCH TO PLAYYYY
+        fin >> option;                              ///             SWITCH TO PLAYYYY
         try{
 
             if (std::cin.fail()) {
