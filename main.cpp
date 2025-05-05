@@ -7,7 +7,7 @@
 #include "entity.h"
 #include "user_interface.h"
 
-#include "goblin.h"
+#include "goblin.hpp"
 #include "skeleton.h"
 #include "wolf.h"
 #include "orc.h"
