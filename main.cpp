@@ -130,11 +130,13 @@ void setup()
 
 int main()
 {
+    std::string input_string;
     std::cout << "WELCOME!\npress: S -to start or Q - to quit\n";
-    while( 1 )
+    while( true )
     {
-        std::string input_string;
-        std::cin >> input_string;
+        // std::cin >> input_string;
+        input_string = 's';
+        
         char option = input_string[0];
         option = std::tolower( option );    
 
