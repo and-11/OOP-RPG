@@ -11,6 +11,7 @@ class Game{
         std::vector< std::shared_ptr<Entity> > entities;
         std::vector< std::shared_ptr<Item> > items;
         bool game_is_lost;
+        bool first_thing = false;
     public:
         Game() : game_is_lost{false}
         {}
@@ -123,14 +124,12 @@ class Game{
                     if( !ct )
                         return x;
                 }
-            // throw Input_Invalid();
             
             if( og_ct < 1 )
                 throw Input_too_low();
-            else if ( og_ct>count_items() )
+            else if ( og_ct>count_enemies() )
                 throw Input_too_high();
-
-
+            
             std::shared_ptr<Entity> err ;
             return err;
         }
@@ -152,9 +151,20 @@ class Game{
             std::shared_ptr<Entity> err ;
             return err;
         }
+        void should_clear()
+        {
+            if( !first_thing )
+            {
+                first_thing = true;
+                // clear_window();
+            }
+        }
 
         void count_attack(int ct_player,int ct_enemy)
         {
+            if( ct_enemy>=1 and ct_enemy<=count_enemies() )
+                should_clear();
+
             std::shared_ptr<Entity> pl,en;
             pl = get_xth_player( ct_player );
             en = get_xth_enemy( ct_enemy );
@@ -162,6 +172,7 @@ class Game{
         }
         void enemy_turn()
         {
+            first_thing = false;
             for(const auto &x:entities)
                 if( x->is_alive() and !x->is_player() )    
                 {
@@ -226,11 +237,17 @@ class Game{
         }
         void count_item_use_enemy(const std::shared_ptr<Item> &i,int ct_enemy)
         {
+            if( ct_enemy>=1 and ct_enemy<=count_enemies() )
+                should_clear();
+        
             i->use( *get_xth_enemy(ct_enemy) );
             std::cout <<"\n";
         }
         void count_item_use_player(const std::shared_ptr<Item> &i,int ct_player)
         {
+            if( ct_player>=1 and ct_player<=count_enemies() )
+                should_clear();
+            
             i->use( *get_xth_player(ct_player) );
             std::cout <<"\n";
         }
@@ -247,7 +264,7 @@ class Game{
         {
             entities.clear();
             items.clear();
-            game_is_lost = false;
+            game_is_lost = first_thing = false;
         }
     };
 

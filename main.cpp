@@ -39,15 +39,15 @@ void setup()
 
     /// POTIONS
     name = "Healing";
-    y = std::make_shared<Potion>( name,-1,15 );
+    y = std::make_shared<Potion>( name,-1,25 );
     level.add_item( y );
 
     name = "Lightning";
     y = std::make_shared<Potion>( name,0,-30 );
     level.add_item( y );
 
-    name = "Increase_stats";
-    y = std::make_shared<Potion>( name,6,6 );
+    name = "Increase Stats";
+    y = std::make_shared<Potion>( name,7,12 );
     level.add_item( y );
 
 
@@ -93,26 +93,18 @@ void setup()
     level.reset();
 
     /// lvl 4
-    x= std::make_shared<Goblin>( 10 );
+    x= std::make_shared<Goblin>( 83 );
     level.add_creature( x );
     
     joc.Add_level(level);
     level.reset();
     
     /// lvl 5
-    x= std::make_shared<Orc>( 4 );
+    x= std::make_shared<Orc>( 1 );
     level.add_creature( x );
-    x= std::make_shared<Orc>( 4 );
+    x= std::make_shared<Orc>( 1 );
     level.add_creature( x );
-    x= std::make_shared<Goblin>( 2 );
-    level.add_creature( x );
-    x= std::make_shared<Goblin>( 1 );
-    level.add_creature( x );
-    x= std::make_shared<Goblin>( 1 );
-    level.add_creature( x );
-    x= std::make_shared<Goblin>( 1 );
-    level.add_creature( x );
-    x= std::make_shared<Skeleton>( 100 );
+    x= std::make_shared<Orc>( 1 );
     level.add_creature( x );
     
     joc.Add_level(level);

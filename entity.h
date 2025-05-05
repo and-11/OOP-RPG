@@ -105,7 +105,7 @@ public:
         else 
             beg = "\033[31m";
 
-        os << beg+ dude.get_name() + lvl + std::to_string(dude.level) + dmg + std::to_string(dude.current_damage) + hp + std::to_string(dude.current_health) +end;
+        os << beg+ dude.get_name() + lvl + std::to_string(dude.level) << std::setw(10) << dmg + std::to_string(dude.current_damage) + hp + std::to_string(dude.current_health) +end;
         return os;
     }   
 

@@ -18,6 +18,9 @@ public:
     }
     void attack( Game *current_level  )
     {
+        current_level->show_players();
+        std::cout << "\n";
+
         for(int i=1;i<=current_level->count_players();i++ )
         {
             
@@ -42,6 +45,8 @@ public:
               
             }
         }
+
+        std::cout <<"\n";
     }
     void see_detail(Game *current_level)
     {
@@ -64,7 +69,7 @@ public:
     bool chose_item( Game *current_level )
     {
         current_level->show_items();
-        std::cout << "Chose an item or press 0 to cancel:\n";
+        std::cout << "\nChose an item or press 0 to cancel:\n";
 
         std::shared_ptr<Item> current_item;
         while( true )
@@ -73,7 +78,8 @@ public:
                 int option = get_numeric_input();
                 if( option == 0 )                
                 {
-                    std::cout << "\nPress 1 to attack or press 2 to use an item:\n";
+                    clear_window();
+                    std::cout << "\nPress 1 to attack or press 2 to use an item or press 3 to see detail about the enemyes:\n";
                     return false;
                 }
                 else
@@ -156,6 +162,8 @@ public:
             try{
                 int option = get_numeric_input();
                 
+                if( option >=1 and option <=3 )
+                    clear_window();
                 if( option == 1 )                
                 {
                     attack(current_level);
@@ -184,9 +192,12 @@ public:
     }
     void start()
     {
+        clear_window();
+
         bool lose = false ;
         for(auto i = std::size_t{0};i<levels.size();i++)
         {
+            std::cout << "LEVEL " << i << ":\n";
             Game *current_level = &levels[i];
             current_level->prepare_fight();
 
@@ -206,8 +217,10 @@ public:
             else if( i<levels.size()-1 )
             {
                 Game::load();
+                clear_window();
                 current_level->game_transfer( levels[i+1] );
             }
+            std::cout << "\033[32myou passed level " << i << "\n\033[0m\n";   
         }
         if( !lose )
             std::cout << "\033[32m\nCONGRATULATIONS\nYOU WON THE GAME!!!\033[0m\n\n\n";
