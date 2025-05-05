@@ -102,7 +102,7 @@ std::shared_ptr<Item> Game::get_xth_item(int ct) {
 
 std::shared_ptr<Entity> Game::get_xth_enemy(int ct) {
     int og_ct = ct;
-    for (auto& x : entities)
+    for (const auto& x : entities)
         if (x->is_alive() && !x->is_player()) {
             ct--;
             if (!ct) return x;
@@ -114,7 +114,7 @@ std::shared_ptr<Entity> Game::get_xth_enemy(int ct) {
 
 std::shared_ptr<Entity> Game::get_xth_player(int ct) {
     int og_ct = ct;
-    for (auto& x : entities)
+    for (const auto& x : entities)
         if (x->is_alive() && x->is_player()) {
             ct--;
             if (!ct) return x;
