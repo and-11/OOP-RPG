@@ -1,12 +1,13 @@
 #pragma once
 
-#include "libraryes.hpp"
 #include "enemy.hpp"
+#include <string>
+#include <iostream>
 
-class Goblin : public Enemy {
+class Skeleton : public Enemy {
 public:
     static std::string e_name;
 
-    explicit Goblin(int level);
+    explicit Skeleton(int level);
     void show_informations() override;
 };

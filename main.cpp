@@ -1,16 +1,16 @@
 
-#include "potion.h"
-#include "functions.h"
-#include "player.h"
-#include "game.h"
-#include "item.h"
-#include "entity.h"
-#include "user_interface.h"
+#include "potion.hpp"
+#include "functions.hpp"
+#include "player.hpp"
+#include "game.hpp"
+#include "item.hpp"
+#include "entity.hpp"
+#include "user_interface.hpp"
 
 #include "goblin.hpp"
-#include "skeleton.h"
-#include "wolf.h"
-#include "orc.h"
+#include "skeleton.hpp"
+#include "wolf.hpp"
+#include "orc.hpp"
 
 
 void setup()

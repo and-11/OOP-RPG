@@ -50,7 +50,19 @@ include(cmake/CopyHelper.cmake)
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${MAIN_EXECUTABLE_NAME}
     main.cpp
-    goblin.cpp
+    enemy.cpp
+    entity.cpp
+    exception.cpp
+    functions.cpp
+    game.cpp 
+    goblin.cpp 
+    item.cpp
+    orc.cpp 
+    player.cpp 
+    potion.cpp 
+    skeleton.cpp 
+    user_interface.cpp 
+    wolf.cpp 
     generated/src/Helper.cpp
 )
 

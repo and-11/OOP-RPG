@@ -3,10 +3,10 @@
 #include "libraryes.hpp"
 #include "enemy.hpp"
 
-class Goblin : public Enemy {
+class Orc : public Enemy {
 public:
     static std::string e_name;
 
-    explicit Goblin(int level);
+    explicit Orc(int level);
     void show_informations() override;
 };

@@ -1,7 +1,6 @@
-#pragma once
-
-#include "libraryes.h"
-#include "exception.h"
+#include "libraryes.hpp"
+#include "exception.hpp"
+#include "functions.hpp"
 
 inline void clear_window()
 {
