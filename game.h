@@ -135,6 +135,7 @@ class Game{
         }
         std::shared_ptr<Entity> get_xth_player(int ct)
         {
+            int og_ct = ct;
             for(auto x:entities)
                 if( x->is_alive() and x->is_player() )
                 {
@@ -142,11 +143,10 @@ class Game{
                     if( !ct )
                         return x;
                 }
-            if( ct <= 0 )
+            if( og_ct <= 0 )
                 throw Input_too_low();
-            else if( ct >= count_players() ) 
+            else if( og_ct >= count_players() )
                 throw Input_too_high();
-            throw Input_Invalid();
 
             std::shared_ptr<Entity> err ;
             return err;
