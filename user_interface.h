@@ -45,7 +45,7 @@ public:
     }
     void see_detail(Game *current_level)
     {
-        std::cout << "Chose an enmy to view details about him:\n";
+        std::cout << "Chose an enmy to view details about:\n";
         current_level->show_enemies();
 
         while( true )
