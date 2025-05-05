@@ -1,6 +1,6 @@
 #pragma once
 
-#include "libraryes.hpp"
+#include "libraries.hpp"
 #include "enemy.hpp"
 
 class Goblin : public Enemy {

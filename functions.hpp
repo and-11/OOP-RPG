@@ -1,9 +1,6 @@
 #pragma once
 
-#include <string>
-#include <random>
-
-extern std::ifstream fin;
+#include "libraries.hpp"
 
 void clear_window();
 int getRandomNumber();

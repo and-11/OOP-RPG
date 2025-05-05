@@ -1,6 +1,6 @@
 #pragma once
 
-#include "libraryes.hpp"
+#include "libraries.hpp"
 #include "entity.hpp"
 
 class Enemy : public Entity {

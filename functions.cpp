@@ -1,8 +1,8 @@
-#include "libraryes.hpp"
-#include "exception.hpp"
 #include "functions.hpp"
+#include "libraries.hpp"
+#include "exception.hpp"
 
-inline void clear_window()
+void clear_window()
 {
     #ifdef _WIN32
         system("cls"); // Windows
@@ -11,8 +11,7 @@ inline void clear_window()
     #endif
 }
 
-inline int getRandomNumber() {
-    
+int getRandomNumber() {    
     int low = 1, high = INT_MAX;
     
     static std::random_device rd;
@@ -21,12 +20,10 @@ inline int getRandomNumber() {
     return distr(gen);
 }
 
-
 #include <fstream>
 std::ifstream fin("date_intrare.in");
 
-
-inline int get_numeric_input()
+int get_numeric_input()
 {
     int option;
     while( true )
