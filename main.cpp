@@ -12,6 +12,8 @@
 #include "skeleton.hpp"
 #include "wolf.hpp"
 #include "orc.hpp"
+#include "crow.hpp"
+
 #include "exception.hpp"
 
 void setup()
@@ -57,7 +59,7 @@ void setup()
     /// lvl 1
     x= std::make_shared<Skeleton>( 2 );
     level.add_creature( x );
-    x= std::make_shared<Skeleton>( 3 );
+    x= std::make_shared<Crow>( 3 );
     level.add_creature( x );
     x= std::make_shared<Skeleton>( 1 );
     level.add_creature( x );
