@@ -126,7 +126,7 @@ class Game{
             
             if( og_ct < 1 )
                 throw Input_too_low();
-            else 
+            else if ( og_ct>count_items() )
                 throw Input_too_high();
 
 
