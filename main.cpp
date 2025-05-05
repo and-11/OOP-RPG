@@ -3,10 +3,13 @@
 #include "functions.h"
 #include "player.h"
 #include "game.h"
-#include "goblin.h"
 #include "item.h"
 #include "entity.h"
 #include "user_interface.h"
+
+#include "goblin.h"
+#include "skeleton.h"
+#include "wolf.h"
 
 void setup()
 {
