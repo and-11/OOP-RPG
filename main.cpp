@@ -14,36 +14,34 @@
 #include "functions.h" 
 #include "user_interface.h"
 
-void Play_the_game()
+void setup()
 {
     Game level,lvl2;
     UI jocc;
-    
-    std::shared_ptr<Entity> x = std::make_shared<Player>( 1,10,"KING",2,2 ) ;
-    
+
+    std::string name = "KING";
+    std::shared_ptr<Entity> x = std::make_shared<Player>( 1,10,name,2,2 ) ;
     level.add_creature( x );
-    x = std::make_shared<Player>( 1,10,"olo",2,2 ) ;
-    
+
+    name = "olo";
+    x = std::make_shared<Player>( 1,10,name,2,2 ) ;
     level.add_creature( x );
     
     
 
-    
-    std::shared_ptr<Item> y = std::make_shared<Potion>( "Healing",-1,25 );
+    name = "Healing";
+    std::shared_ptr<Item> y = std::make_shared<Potion>( name,-1,25 );
     level.add_item( y );
 
-    y = std::make_shared<Potion>( "Lightning",0,-100 );
+    name = "Lightning";
+    y = std::make_shared<Potion>( name,0,-100 );
+    level.add_item( y );
+
+    name = "Increase_stats";
+    y = std::make_shared<Potion>( name,4,4 );
     level.add_item( y );
 
 
-    y = std::make_shared<Potion>( "Increase_stats",4,4 );
-    level.add_item( y );
-
-    // x= std::make_shared<Player>( 1,1000,"Flavius",1,1 );
-    // level.add_creature( x );
-    // x= std::make_shared<Player>( 2,500,"Maria_t",1,1 );
-    // level.add_creature( x );
-    
     x= std::make_shared<Goblin>( 2 );
     level.add_creature( x );
     x= std::make_shared<Goblin>( 1 );
@@ -78,7 +76,7 @@ int main()
     //     try{
     //         if( option == 's' and input_string.size()==1  )
     //         {
-                Play_the_game();
+                setup();
     //             break;
     //         } 
     //         else if( option == 'q' and input_string.size()==1 )

@@ -77,10 +77,10 @@ class Game{
         }
         void show_status()
         {
-            std::cout <<"--------\n";
+            std::cout <<"\n";
             show_players();
             show_enemies();
-            std::cout <<"--------\n";
+            std::cout <<"\n";
         }
         void show_items()
         {
@@ -124,7 +124,7 @@ class Game{
                 }
             // throw Input_Invalid();
             
-            if( ct < 1 )
+            if( og_ct < 1 )
                 throw Input_too_low();
             else 
                 throw Input_too_high();
