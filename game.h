@@ -11,32 +11,34 @@ class Game{
         std::vector< std::shared_ptr<Entity> > entities;
         std::vector< std::shared_ptr<Item> > items;
         bool game_is_lost;
-        bool first_thing = 0;
+        bool first_thing = false;
     public:
-        Game() : game_is_lost{0}
+        Game() : game_is_lost{false}
         {}
-        bool is_game_lost()
+        [[nodiscard]] bool is_game_lost() const
         {
             return game_is_lost;
         }
-        void add_creature( std::shared_ptr<Entity> dude )
+        void add_creature( const std::shared_ptr<Entity> & dude )
         {
             entities.push_back( dude );
         }
-        void game_transfer( Game&next_level )
+        void game_transfer( Game&next_level ) const
         {
-            for( auto x:entities )
-                if( x->is_player() )
+            for( const auto & x:entities )
+                if( x->is_player() ) {
                     next_level.add_creature( x );
+                }
+
             
-            for( auto x:items )                                     /// MAYBE TEST
+            for( const auto & x:items )                                     /// MAYBE TEST
                 next_level.add_item( x );
         }
-        void add_item( std::shared_ptr<Item> it )
+        void add_item( const std::shared_ptr<Item> & it )
         {
             items.push_back(it);
         }
-        void show_players()
+        void show_players() const
         {
             int ct = 0;
             std::cout << "\033[32m";
@@ -44,38 +46,38 @@ class Game{
                 std::cout << "Heroes\n";
             std::cout << "\033[0m"; /// color
 
-            for(auto x:entities)
+            for(const auto & x:entities)
             if( x->is_alive() and x->is_player() )
                 std::cout << "#" << (++ct) << " " << (*x) << "\n";   
         }
-        int count_players()
+        [[nodiscard]] int count_players() const
         {
             int ct = 0;
-            for(auto x:entities)
+            for(const auto & x:entities)
                 if( x->is_alive() and x->is_player() )
                     ct++;
             return ct;
         }
-        void show_enemies()
+        void show_enemies() const
         {
             int ct = 0;
             std::cout << "\033[31m"; /// color
             if( count_enemies() > 0 )
                 std::cout << "Enemies\n";
             std::cout << "\033[0m"; /// color
-            for(auto x:entities)
+            for(const auto & x:entities)
                 if( x->is_alive() and !x->is_player() )
                     std::cout  << "#" << (++ct) << " " << *x << "\n";
         }
-        int count_enemies()
+        [[nodiscard]] int count_enemies() const
         {
             int ct = 0;
-            for(auto x:entities)
+            for(const auto & x:entities)
                 if( x->is_alive() and !x->is_player() )
                     ct++;
             return ct;   
         }
-        void show_status()
+        void show_status() const
         {
             std::cout <<"\n";
             show_players();
@@ -85,24 +87,24 @@ class Game{
         void show_items()
         {
             int ct = 0 ;
-            for(auto x:items)
+            for(const auto & x:items)
                 std::cout << "\033[36m#" << ++ct << " " << (*x) << "\n";
         }
         void prepare_fight()
         {
-            for(auto x:entities)
+            for(const auto & x:entities)
             {
                 x->Ready();
             }
         }
-        void attack( std::shared_ptr<Entity> a , std::shared_ptr<Entity> b )  ///     a il ataca pe B!
+        void attack( const std::shared_ptr<Entity>&a , const std::shared_ptr<Entity> & b )  ///     a il ataca pe B!
         {
             b->recive_damage( a->get_damage() );
             std::cout << a->get_name() << " attacked " << b->get_name() << " for " << a->show_damage() << "\n";
         }
-        int count_items()
+        [[nodiscard]] int count_items() const
         {
-            return items.size();
+            return int(items.size());
         }
         std::shared_ptr<Item> get_xth_item(int ct)
         {
@@ -155,7 +157,7 @@ class Game{
         {
             if( !first_thing )
             {
-                first_thing = 1;
+                first_thing = true;
                 clear_window();
             }
         }
@@ -172,8 +174,8 @@ class Game{
         }
         void enemy_turn()
         {
-            first_thing = 0;
-            for(auto x:entities)
+            first_thing = false;
+            for(const auto &x:entities)
                 if( x->is_alive() and !x->is_player() )    
                 {
                     if( count_players() == 0 )
@@ -181,7 +183,7 @@ class Game{
     
                     int who = getRandomNumber() % count_players() + 1 ;
                     int ct=0;
-                    for(auto y:entities) 
+                    for(const auto &y:entities)
                         if( y->is_alive() and y->is_player() )
                         {
                             ct++;
@@ -198,21 +200,21 @@ class Game{
             if( !count_enemies() )
             {
                 std::cout << "\033[1;35m" << "YOU WON THIS LEVEL!\n" << "\033[0m";
-                return 1;
+                return true;
             }
             else if( !count_players() )
             {
-                game_is_lost = 1;
+                game_is_lost = true;
                 std::cout << "\033[33m" << "YOU LOST!\n" << "\033[0m";
-                return 1;
+                return true;
             }
-            return 0;
+            return false;
         }
         std::string th_player_name(int i)
         {
             try{
                 int ct = 0;
-                for(auto x:entities)
+                for(const auto &x:entities)
                     if( x->is_alive() and x->is_player() )
                     {
                         ct++;
@@ -236,10 +238,10 @@ class Game{
                 throw Input_Invalid();
             }
             catch(MyException&e){
-                e.what();
+                std::cout << e.what() << "\n";
             }            
         }
-        void count_item_use_enemy(std::shared_ptr<Item> i,int ct_enemy)
+        void count_item_use_enemy(const std::shared_ptr<Item> &i,int ct_enemy)
         {
             if( ct_enemy>=1 and ct_enemy<=count_enemies() )
                 should_clear();
@@ -247,7 +249,7 @@ class Game{
             i->use( *get_xth_enemy(ct_enemy) );
             std::cout <<"\n";
         }
-        void count_item_use_player(std::shared_ptr<Item> i,int ct_player)
+        void count_item_use_player(const std::shared_ptr<Item> &i,int ct_player)
         {
             if( ct_player>=1 and ct_player<=count_enemies() )
                 should_clear();

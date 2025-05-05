@@ -2,14 +2,28 @@
 #include <typeinfo>
 
 #include <vector>
+
+
+class A {
+public:
+   virtual void Afis() {
+        std::cout << " A ";
+    }
+};class B:public A {
+public:
+    void Afis() {
+        std::cout << " Bs ";
+    }
+};class C:public B {
+public:
+    void Afis() {
+        std::cout << " C ";
+    }
+};
+
+
 int main() {
-
-
-    int x = 5;
-    std::cout << typeid(x).name() << std::endl;
-
-    std::vector<int> a;
-    std::cout << typeid( a.size() ).name() << std::endl;
-
+    A *x = new C;
+    x->Afis();
 
 }

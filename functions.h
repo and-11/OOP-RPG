@@ -3,7 +3,7 @@
 #include "libraryes.h"
 #include "exception.h"
 
-void clear_window()
+inline void clear_window()
 {
     #ifdef _WIN32
         system("cls"); // Windows
@@ -12,7 +12,7 @@ void clear_window()
     #endif
 }
 
-int getRandomNumber() {
+inline int getRandomNumber() {
     
     int low = 1, high = INT_MAX;
     
@@ -22,10 +22,10 @@ int getRandomNumber() {
     return distr(gen);
 }
 
-int get_numeric_input()
+inline int get_numeric_input()
 {
     int option;
-    while( 1 )
+    while( true )
     {
         std::cin >> option;
         try{

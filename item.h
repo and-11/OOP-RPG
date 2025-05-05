@@ -9,12 +9,13 @@ public:
     virtual void description() = 0;
     */
     virtual void use( Entity & dude ) = 0;
-    std::string get_name() const
+    [[nodiscard]] std::string get_name() const
     {
         return "\033[36m"+name+"\033[0m";
     }
     Item() = default;
-    Item(std::string & s) : name{s}
+
+    explicit Item(const std::string & s) : name{s}
     {} 
     virtual void print(std::ostream& os) const        ////            misto schema
     {
@@ -26,5 +27,6 @@ public:
         i.print(os);
         os << "\033[0m";
         return os;
-    }    
+    }
+    virtual ~Item() = default;
 };

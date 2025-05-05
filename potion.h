@@ -18,7 +18,7 @@ public:
     }    
     Potion() : damage_increase{0} , health_increase{0} 
     {}
-    Potion(std::string &name,int damage_i,int health_i) : Item{name}, damage_increase{damage_i} , health_increase{health_i}
+    Potion(const std::string &name,int damage_i,int health_i) : Item{name}, damage_increase{damage_i} , health_increase{health_i}
     {}
     /*
     void description() override
