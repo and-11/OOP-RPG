@@ -122,8 +122,6 @@ class Game{
                     if( !ct )
                         return x;
                 }
-            std::string msg = "THERE IS NO ENEMY #" + std::to_string(og_ct) ;
-
             // throw Input_Invalid();
             
             if( ct < 1 )

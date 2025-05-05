@@ -13,7 +13,7 @@ class Player: public Entity{
         {
             std::cerr << "You did not set stats for a Player!!\n";
         }    
-        Player(int damage,int health,std::string name,int c_damage,int c_health) : 
+        Player(int damage,int health,std::string&name,int c_damage,int c_health) :
             Entity( 1, damage, health, name , c_damage, c_health )
         {
             player =1;

@@ -4,7 +4,7 @@
 
 class Potion;
 
-class Entity{
+class Entity {
 private:
 protected:
     int level,damage,health,current_health,current_damage;
@@ -34,17 +34,16 @@ public:
         coefficient_health = other.coefficient_health;
         player = other.player;
         name = "Cheap_coppy";
-       return *this;
+        return *this;
     }
 
-    Entity()
+    Entity() : name{"Forgotten"}
     {
         current_health = 0;
         current_damage = 0;
         coefficient_damage = 0;
         coefficient_health = 0;
         level = damage = health = 0;
-        name = "Forgotten";
         player = false;
     }
     Entity(const int level,const int damage,const int health,const std::string&name, const int c_damage, const int c_health )
@@ -72,7 +71,7 @@ public:
     }
     [[nodiscard]] std::string get_name() const
     {
-        std::string ans,beg,end="\033[0m";
+        std::string beg,end="\033[0m";
         if( is_player() )
             beg = "\033[32m";
         else 
@@ -89,7 +88,7 @@ public:
     }
     [[nodiscard]] std::string show_damage() const
     {
-        std::string ans,beg,end="dmg\033[0m";
+        std::string beg,end="dmg\033[0m";
         if( is_player() )
             beg = "\033[32m";
         else 
@@ -102,7 +101,7 @@ public:
         current_health -= value;
     }
     friend std::ostream & operator<<(std::ostream& os,const Entity & dude) {
-        std::string ans,beg,end="\033[0m",dmg = " dmg:",hp =" hp:",lvl = " lvl:";
+        std::string beg,end="\033[0m",dmg = " dmg:",hp =" hp:",lvl = " lvl:";
         if( dude.is_player() )
             beg = "\033[32m";
         else 
