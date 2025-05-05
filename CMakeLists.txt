@@ -63,6 +63,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
     skeleton.cpp 
     user_interface.cpp 
     wolf.cpp 
+    crow.cpp
     generated/src/Helper.cpp
 )
 
