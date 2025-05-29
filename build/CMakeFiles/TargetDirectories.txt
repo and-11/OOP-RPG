@@ -1,7 +1,0 @@
-/home/jeff/Facultate/s2/OOP/OOP-RPG/build/CMakeFiles/oop.dir
-/home/jeff/Facultate/s2/OOP/OOP-RPG/build/CMakeFiles/edit_cache.dir
-/home/jeff/Facultate/s2/OOP/OOP-RPG/build/CMakeFiles/rebuild_cache.dir
-/home/jeff/Facultate/s2/OOP/OOP-RPG/build/CMakeFiles/list_install_components.dir
-/home/jeff/Facultate/s2/OOP/OOP-RPG/build/CMakeFiles/install.dir
-/home/jeff/Facultate/s2/OOP/OOP-RPG/build/CMakeFiles/install/local.dir
-/home/jeff/Facultate/s2/OOP/OOP-RPG/build/CMakeFiles/install/strip.dir
