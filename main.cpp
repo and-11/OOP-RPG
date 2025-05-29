@@ -137,8 +137,8 @@ int main()
     std::cout << "WELCOME!\npress: S -to start or Q - to quit\n";
     while( true )
     {
-        // std::cin >> input_string;           /// PLAY
-        input_string = 's';              /// PLAY
+        std::cin >> input_string;           /// PLAY
+        // input_string = 's';              /// PLAY
         
         char option = input_string[0];
         option = std::tolower( option );    
