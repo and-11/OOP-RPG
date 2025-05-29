@@ -1,0 +1,41 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/oop.dir/crow.cpp.o"
+  "CMakeFiles/oop.dir/crow.cpp.o.d"
+  "CMakeFiles/oop.dir/enemy.cpp.o"
+  "CMakeFiles/oop.dir/enemy.cpp.o.d"
+  "CMakeFiles/oop.dir/entity.cpp.o"
+  "CMakeFiles/oop.dir/entity.cpp.o.d"
+  "CMakeFiles/oop.dir/exception.cpp.o"
+  "CMakeFiles/oop.dir/exception.cpp.o.d"
+  "CMakeFiles/oop.dir/functions.cpp.o"
+  "CMakeFiles/oop.dir/functions.cpp.o.d"
+  "CMakeFiles/oop.dir/game.cpp.o"
+  "CMakeFiles/oop.dir/game.cpp.o.d"
+  "CMakeFiles/oop.dir/generated/src/Helper.cpp.o"
+  "CMakeFiles/oop.dir/generated/src/Helper.cpp.o.d"
+  "CMakeFiles/oop.dir/goblin.cpp.o"
+  "CMakeFiles/oop.dir/goblin.cpp.o.d"
+  "CMakeFiles/oop.dir/item.cpp.o"
+  "CMakeFiles/oop.dir/item.cpp.o.d"
+  "CMakeFiles/oop.dir/main.cpp.o"
+  "CMakeFiles/oop.dir/main.cpp.o.d"
+  "CMakeFiles/oop.dir/orc.cpp.o"
+  "CMakeFiles/oop.dir/orc.cpp.o.d"
+  "CMakeFiles/oop.dir/player.cpp.o"
+  "CMakeFiles/oop.dir/player.cpp.o.d"
+  "CMakeFiles/oop.dir/potion.cpp.o"
+  "CMakeFiles/oop.dir/potion.cpp.o.d"
+  "CMakeFiles/oop.dir/skeleton.cpp.o"
+  "CMakeFiles/oop.dir/skeleton.cpp.o.d"
+  "CMakeFiles/oop.dir/user_interface.cpp.o"
+  "CMakeFiles/oop.dir/user_interface.cpp.o.d"
+  "CMakeFiles/oop.dir/wolf.cpp.o"
+  "CMakeFiles/oop.dir/wolf.cpp.o.d"
+  "oop"
+  "oop.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/oop.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
