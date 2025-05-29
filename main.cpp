@@ -130,40 +130,75 @@ void setup()
     y.reset();
 }
 
+///                         IF YOU WANT TO PLAY REMOVE THE COMMENT FROM THIS 
+// #define HUMAN_PLAYER
+
 
 int main()
 {
+
+
+
+//     Game level;
+
+//     std::string name;
+//     std::shared_ptr<Entity> x;
+//     std::shared_ptr<Item> y;
+   
+//     /// PLAYERS
+//     name = "Knight";
+//     x = std::make_shared<Player>( 4,10,name,2,2 ) ;
+//     level.add_creature( x );
+
+//     std::cout << (*x) << "\n";
+
+
+
+
+
+
+
+
+// return 0;
+
+
     std::string input_string;
     std::cout << "WELCOME!\npress: S -to start or Q - to quit\n";
-    while( true )
-    {
-        std::cin >> input_string;           /// PLAY
-        // input_string = 's';              /// PLAY
-        
-        char option = input_string[0];
-        option = std::tolower( option );    
+    
+    #ifndef HUMAN_PLAYER
+        while( true )
+        {
+            input_string = 'q';              /// PLAY
+                std::cin >> input_string;           /// PLAY
+                #
+                char option = input_string[0];
+                option = std::tolower( option );    
+                
+                try{
+                    if( option == 's' and input_string.size()==1  )
+                    {
+                        setup();
+                        break;
+                    } 
+                    else if( option == 'q' and input_string.size()==1 )
+                    {
+                        break;
+                    }
+                    else 
+                    throw Input_Invalid();
+                }
+                catch( MyException &e ){
+                    std::cout << e.what() << "\n";
+                }
+        }
+    #endif
 
-        try{
-            if( option == 's' and input_string.size()==1  )
-            {
-                setup();
-                break;
-            } 
-            else if( option == 'q' and input_string.size()==1 )
-            {
-                break;
-            }
-            else 
-                throw Input_Invalid();
-        }
-        catch( MyException &e ){
-            std::cout << e.what() << "\n";
-        }
-    }
+    return 0;
 }
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
