@@ -1,12 +1,15 @@
 #include "libraries.hpp"
-#include "potion.hpp"
 #include "functions.hpp"
-#include "player.hpp"
+
 #include "game.hpp"
+#include "user_interface.hpp"
+
+#include "entity.hpp"
+#include "player.hpp"
+#include "player_factory.hpp"
 
 #include "item.hpp"
-#include "entity.hpp"
-#include "user_interface.hpp"
+#include "potion.hpp"
 
 #include "goblin.hpp"
 #include "skeleton.hpp"
@@ -130,9 +133,17 @@ void setup()
     y.reset();
 }
 
+#define PLAYER
 
 int main()
 {
+
+    #ifndef PLAYER
+        return 0;
+    #endif
+
+
+// return 0;
     std::string input_string;
     std::cout << "WELCOME!\npress: S -to start or Q - to quit\n";
     while( true )

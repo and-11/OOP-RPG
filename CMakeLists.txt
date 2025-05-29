@@ -38,6 +38,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
     item.cpp
     orc.cpp 
     player.cpp 
+    player_factory.cpp
     potion.cpp 
     skeleton.cpp 
     user_interface.cpp 
