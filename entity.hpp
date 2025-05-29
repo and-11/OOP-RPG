@@ -14,6 +14,14 @@ protected:
     bool player;
 
 public:
+    void set_level(int level);
+    void set_damage(int damage);
+    void set_health(int health);
+    void set_name(const std::string& name);
+    void set_player(bool player);
+    void set_coefficient_damage(int coefficient_damage);
+    void set_coefficient_health(int coefficient_health);
+
     Entity(); 
     Entity(const Entity& other);
     Entity& operator=(const Entity& other); 

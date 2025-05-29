@@ -6,7 +6,7 @@
 
 #include "entity.hpp"
 #include "player.hpp"
-#include "player_factory.hpp"
+#include "player_builder.hpp"
 
 #include "item.hpp"
 #include "potion.hpp"
@@ -22,26 +22,35 @@
 void setup()
 {
     UI joc;
-    
+
     Game level;
 
     std::string name;
     std::shared_ptr<Entity> x;
     std::shared_ptr<Item> y;
-   
+
     /// PLAYERS
-    name = "Knight";
-    x = std::make_shared<Player>( 4,10,name,2,2 ) ;
+    ///
+    Player_Builder_Director director;
+    std::shared_ptr< Player_Builder > player_builder;
+
+    player_builder = std::make_shared<Knight_Player_Builder>() ;
+    director.set_player_builder( player_builder );
+    director.build_player();
+    x = director.get_player();
     level.add_creature( x );
 
-    name = "Archer";
-    x = std::make_shared<Player>( 10,6,name,2,2 ) ;
+    player_builder = std::make_shared<Archer_Player_Builder>() ;
+    director.set_player_builder( player_builder );
+    director.build_player();
+    x = director.get_player();
     level.add_creature( x );
 
-    name = "Shield";
-    x = std::make_shared<Player>( 1,23,name,2,2 ) ;
+    player_builder = std::make_shared<Shield_Player_Builder>() ;
+    director.set_player_builder( player_builder );
+    director.build_player();
+    x = director.get_player();
     level.add_creature( x );
-
 
     /// POTIONS
     name = "Healing";
@@ -101,10 +110,10 @@ void setup()
     /// lvl 4
     x= std::make_shared<Goblin>( 83 );
     level.add_creature( x );
-    
+
     joc.Add_level(level);
     level.reset();
-    
+
     /// lvl 5
     x= std::make_shared<Orc>( 1 );
     level.add_creature( x );
@@ -112,21 +121,21 @@ void setup()
     level.add_creature( x );
     x= std::make_shared<Orc>( 1 );
     level.add_creature( x );
-    
+
     joc.Add_level(level);
     level.reset();
-    
+
     /// lvl 6
     x= std::make_shared<Orc>( 7 );
     level.add_creature( x );
     x= std::make_shared<Wolf>( 7 );
     level.add_creature( x );
-    
+
     joc.Add_level(level);
     level.reset();
-    
 
-    ///     -   --- -   -   -   -   -   -   --  -   -   
+
+    ///     -   --- -   -   -   -   -   -   --  -   -
 
     joc.start();
     x.reset();
@@ -138,17 +147,18 @@ void setup()
 int main()
 {
 
-    #ifndef PLAYER
-        return 0;
-    #endif
 
-
-// return 0;
+    
+    
     std::string input_string;
     std::cout << "WELCOME!\npress: S -to start or Q - to quit\n";
     while( true )
     {
-        std::cin >> input_string;           /// PLAY
+        input_string = 's';
+        // std::cin >> input_string;           /// PLAY
+
+        // #ifdef PLAYER
+        // #endif
         
         char option = input_string[0];
         option = std::tolower( option );    

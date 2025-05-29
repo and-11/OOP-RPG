@@ -1,5 +1,29 @@
 #include "entity.hpp"
 
+void Entity::set_coefficient_damage(int c_damage) {
+    this->coefficient_damage = c_damage;
+}
+void Entity::set_coefficient_health(int coefficient_health) {
+    this->coefficient_health = coefficient_health;
+}
+void Entity::set_health(int health) {
+    this->health = health;
+}
+void Entity::set_damage(int damage) {
+    this->damage = damage;
+}
+void Entity::set_level(int level) {
+    this->level = level;
+}
+void Entity::set_name(const std::string& name) {
+    this->name = name;
+}
+void Entity::set_player(bool player) {
+    this->player = player;
+}
+
+
+
 Entity::Entity() : name{"Forgotten"} {
     current_health = 0;
     current_damage = 0;
