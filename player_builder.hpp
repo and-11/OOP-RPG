@@ -32,6 +32,8 @@ public:
 
         player->set_coefficient_damage(2);
         player->set_coefficient_health(2);
+
+        player->set_level(1);
     }
     Knight_Player_Builder() = default;
 };
@@ -48,6 +50,8 @@ public:
 
         player->set_coefficient_damage(2);
         player->set_coefficient_health(2);
+
+        player->set_level(1);
     }
     Archer_Player_Builder() = default;
 };
@@ -65,6 +69,8 @@ public:
 
         player->set_coefficient_damage(2);
         player->set_coefficient_health(2);
+
+        player->set_level(1);
     }
     Shield_Player_Builder() = default;
 };

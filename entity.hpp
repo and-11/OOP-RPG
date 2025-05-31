@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include "visitor.hpp"
 
 class Potion; 
 
@@ -40,4 +41,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Entity& dude);
     friend class Potion;
+    int get_current_health();
+    bool accept_visit(visitor_alive vis);
+
 };

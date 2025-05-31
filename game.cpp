@@ -31,7 +31,7 @@ void Game::game_transfer(Game& next_level) const {
 int Game::count_players() const {
     int ct = 0;
     for (const auto& x : entities)
-        if (x->is_alive() && x->is_player())
+        if (x->accept_visit(vis) && x->is_player())
             ct++;
     return ct;
 }
@@ -39,7 +39,7 @@ int Game::count_players() const {
 int Game::count_enemies() const {
     int ct = 0;
     for (const auto& x : entities)
-        if (x->is_alive() && !x->is_player())
+        if (x->accept_visit(vis) && !x->is_player())
             ct++;
     return ct;
 }
@@ -55,7 +55,7 @@ void Game::show_players() const {
         std::cout << "Heroes\n";
     std::cout << "\033[0m";
     for (const auto& x : entities)
-        if (x->is_alive() && x->is_player())
+        if (x->accept_visit(vis) && x->is_player())
             std::cout << "#" << (++ct) << " " << (*x) << "\n";
 }
 
@@ -66,7 +66,7 @@ void Game::show_enemies() const {
         std::cout << "Enemies\n";
     std::cout << "\033[0m";
     for (const auto& x : entities)
-        if (x->is_alive() && !x->is_player())
+        if (x->accept_visit(vis) && !x->is_player())
             std::cout << "#" << (++ct) << " " << (*x) << "\n";
 }
 
@@ -103,7 +103,7 @@ std::shared_ptr<Item> Game::get_xth_item(int ct) {
 std::shared_ptr<Entity> Game::get_xth_enemy(int ct) {
     int og_ct = ct;
     for (const auto& x : entities)
-        if (x->is_alive() && !x->is_player()) {
+        if (x->accept_visit(vis) && !x->is_player()) {
             ct--;
             if (!ct) return x;
         }
@@ -115,7 +115,7 @@ std::shared_ptr<Entity> Game::get_xth_enemy(int ct) {
 std::shared_ptr<Entity> Game::get_xth_player(int ct) {
     int og_ct = ct;
     for (const auto& x : entities)
-        if (x->is_alive() && x->is_player()) {
+        if (x->accept_visit(vis) && x->is_player()) {
             ct--;
             if (!ct) return x;
         }
@@ -132,12 +132,12 @@ void Game::count_attack(int ct_player, int ct_enemy) {
 
 void Game::enemy_turn() {
     for (const auto& x : entities)
-        if (x->is_alive() && !x->is_player()) {
+        if (x->accept_visit(vis) && !x->is_player()) {
             if (count_players() == 0) break;
             int who = getRandomNumber() % count_players() + 1;
             int ct = 0;
             for (const auto& y : entities)
-                if (y->is_alive() && y->is_player()) {
+                if (y->accept_visit(vis) && y->is_player()) {
                     ct++;
                     if (ct == who) {
                         attack(x, y);
@@ -163,7 +163,7 @@ std::string Game::th_player_name(int i) {
     try {
         int ct = 0;
         for (const auto& x : entities)
-            if (x->is_alive() && x->is_player()) {
+            if (x->accept_visit(vis) && x->is_player()) {
                 ct++;
                 if (ct == i) return x->get_name();
             }

@@ -33,7 +33,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
     entity.cpp
     exception.cpp
     functions.cpp
-    game.cpp 
+    game.cpp
+    visitor.cpp
     goblin.cpp 
     item.cpp
     orc.cpp 

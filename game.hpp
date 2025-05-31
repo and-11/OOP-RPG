@@ -5,13 +5,14 @@
 #include "item.hpp"
 #include "exception.hpp"
 #include "enemy.hpp"
+#include "visitor.hpp"
 
 class Game {
 private:
     std::vector<std::shared_ptr<Entity>> entities;
     std::vector<std::shared_ptr<Item>> items;
     bool game_is_lost;
-
+    visitor_alive vis;
 public:
     Game();
     ~Game();

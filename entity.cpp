@@ -22,6 +22,9 @@ void Entity::set_player(bool player) {
     this->player = player;
 }
 
+int Entity::get_current_health() {
+    return this->current_health;
+}
 
 
 Entity::Entity() : name{"Forgotten"} {
@@ -71,6 +74,9 @@ Entity& Entity::operator=(const Entity& other) {
 
 bool Entity::is_alive() const {
     return current_health > 0;
+}
+bool Entity::accept_visit(visitor_alive vis) {
+    return vis.visit_is_alive( this );
 }
 
 bool Entity::is_player() const {
