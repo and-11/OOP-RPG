@@ -34,7 +34,7 @@ public:
     void show_items();
 
     void prepare_fight();
-    void attack(const std::shared_ptr<Entity>& a, const std::shared_ptr<Entity>& b);
+    // void attack(const std::shared_ptr<Entity>& a, const std::shared_ptr<Entity>& b);
     
     std::shared_ptr<Item> get_xth_item(int ct);
     std::shared_ptr<Entity> get_xth_enemy(int ct);
@@ -52,4 +52,11 @@ public:
 
     void reset();
     static void load();
+
+    template<typename A,typename B>
+    void attack(const std::shared_ptr<A>& a, const std::shared_ptr<B>& b) {
+        b->recive_damage(a->get_damage());
+        std::cout << a->get_name() << " attacked " << b->get_name()
+                  << " for " << a->show_damage() << "\n";
+    }
 };

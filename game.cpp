@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include "functions.hpp"
+#include "random.hpp"
 
 Game::Game() : game_is_lost{false} {}
 
@@ -92,11 +93,7 @@ void Game::prepare_fight() {
         x->Ready();
 }
 
-void Game::attack(const std::shared_ptr<Entity>& a, const std::shared_ptr<Entity>& b) {
-    b->recive_damage(a->get_damage());
-    std::cout << a->get_name() << " attacked " << b->get_name()
-              << " for " << a->show_damage() << "\n";
-}
+
 
 std::shared_ptr<Item> Game::get_xth_item(int ct) {
     if (ct < 1) throw Input_too_low();
@@ -138,7 +135,9 @@ void Game::enemy_turn() {
     for (const auto& x : entities)
         if (x->accept_visit(vis) && !x->is_player()) {
             if (count_players() == 0) break;
-            int who = getRandomNumber() % count_players() + 1;
+
+            random_cls<int>r;
+            int who = r.get_random_number() % count_players() + 1;
             int ct = 0;
             for (const auto& y : entities)
                 if (y->accept_visit(vis) && y->is_player()) {

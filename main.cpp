@@ -1,5 +1,6 @@
 #include "libraries.hpp"
 #include "functions.hpp"
+#include "random.hpp"
 
 #include "game.hpp"
 #include "user_interface.hpp"
@@ -146,7 +147,6 @@ void setup()
 
 int main()
 {
-  
     std::string input_string;
     std::cout << "WELCOME!\npress: S -to start or Q - to quit\n";
     while( true )
