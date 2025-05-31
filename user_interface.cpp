@@ -138,12 +138,14 @@ void UI::start() {
     clear_window();
 
     bool lose = false;
+    visitor_is_over vis;
+
     for (size_t i = 0; i < levels.size(); i++) {
         std::cout << "LEVEL " << i << ":\n";
         Game* current_level = &levels[i];
         current_level->prepare_fight();
 
-        while (!current_level->is_over()) {
+        while ( !current_level->accept_visit(vis) ) {
             current_level->show_status();
             chose_action(current_level);
             current_level->enemy_turn();

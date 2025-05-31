@@ -17,6 +17,8 @@ public:
     Game();
     ~Game();
 
+    [[nodiscard]] bool accept_visit( visitor_is_over vis );
+
     [[nodiscard]] bool is_game_lost() const;
     [[nodiscard]] int count_players() const;
     [[nodiscard]] int count_enemies() const;

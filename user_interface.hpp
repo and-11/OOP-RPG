@@ -3,6 +3,7 @@
 #include "game.hpp"
 #include "functions.hpp"
 #include "exception.hpp"
+#include "visitor.hpp"
 
 class UI {
 private:

@@ -12,6 +12,10 @@ Game::~Game() {
     return game_is_lost;
 }
 
+[[nodiscard]] bool Game::accept_visit( visitor_is_over vis ) {
+    return vis.visit_is_game_over(this);
+}
+
 void Game::add_creature(const std::shared_ptr<Entity>& dude) {
     entities.push_back(dude);
 }
