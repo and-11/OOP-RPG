@@ -5,6 +5,8 @@
 #include <string>
 #include "visitor.hpp"
 
+#include <SFML/Graphics.hpp>
+
 class Potion; 
 
 class Entity {
@@ -13,6 +15,7 @@ protected:
     int coefficient_damage, coefficient_health;
     std::string name;
     bool player;
+    std::vector<sf::Texture> frames;
 
 public:
     void set_level(int level);
@@ -23,6 +26,8 @@ public:
     void set_coefficient_damage(int coefficient_damage);
     void set_coefficient_health(int coefficient_health);
 
+    void add_frames( int number_of_frames,std::string path );
+    
     Entity(); 
     Entity(const Entity& other);
     Entity& operator=(const Entity& other); 

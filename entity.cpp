@@ -26,6 +26,20 @@ int Entity::get_current_health() {
     return this->current_health;
 }
 
+void Entity::add_frames( int number_of_frames,std::string path )
+{
+    for(int i = 0; i < number_of_frames; i++)
+    {
+        this->frames.clear(); /// ajuta la build
+         
+        sf::Texture frame;
+        if (!frame.loadFromFile( path + "/frame_" + std::to_string(i) + ".png")) {
+            std::cerr << name << ": failed to load frame " << i << "\n";
+            // return ;
+        }   
+        this->frames.push_back( frame );
+    }
+}
 
 Entity::Entity() : name{"Forgotten"} {
     current_health = 0;

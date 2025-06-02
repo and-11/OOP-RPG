@@ -147,36 +147,36 @@ void setup()
 
 int main()
 {
-    std::string input_string;
-    std::cout << "WELCOME!\npress: S -to start or Q - to quit\n";
-    while( true )
-    {
-        input_string = 's';
+    // std::string input_string;
+    // std::cout << "WELCOME!\npress: S -to start or Q - to quit\n";
+    // while( true )
+    // {
+    //     input_string = 's';
         
-        #ifdef PLAYER
-            std::cin >> input_string;           /// PLAY
-        #endif
+    //     #ifdef PLAYER
+    //         std::cin >> input_string;           /// PLAY
+    //     #endif
         
-        char option = input_string[0];
-        option = std::tolower( option );    
+    //     char option = input_string[0];
+    //     option = std::tolower( option );    
 
-        try{
-            if( option == 's' and input_string.size()==1  )
-            {
+    //     try{
+    //         if( option == 's' and input_string.size()==1  )
+    //         {
                 setup();
-                break;
-            } 
-            else if( option == 'q' and input_string.size()==1 )
-            {
-                break;
-            }
-            else 
-                throw Input_Invalid();
-        }
-        catch( MyException &e ){
-            std::cout << e.what() << "\n";
-        }
-    }
+    //             break;
+    //         } 
+    //         else if( option == 'q' and input_string.size()==1 )
+    //         {
+    //             break;
+    //         }
+    //         else 
+    //             throw Input_Invalid();
+    //     }
+    //     catch( MyException &e ){
+    //         std::cout << e.what() << "\n";
+    //     }
+    // }
 }
 
 

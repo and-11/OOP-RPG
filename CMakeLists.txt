@@ -25,6 +25,7 @@ include(cmake/CopyHelper.cmake)
 # FetchContent_Declare(
 # FetchContent_MakeAvailable(SomeLib)
 
+find_package(SFML 2.5 REQUIRED COMPONENTS graphics window system)
 
 # find_package(Threads REQUIRED)
 add_executable(${MAIN_EXECUTABLE_NAME}
@@ -56,6 +57,7 @@ target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE generated/incl
 # target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ${<SomeLib>_SOURCE_DIR}/include)
 # target_link_directories(${MAIN_EXECUTABLE_NAME} PRIVATE ${<SomeLib>_BINARY_DIR}/lib)
 # target_link_libraries(${MAIN_EXECUTABLE_NAME} <SomeLib>)
+target_link_libraries(oop sfml-graphics sfml-window sfml-system)
 
 
 install(TARGETS ${MAIN_EXECUTABLE_NAME} DESTINATION ${DESTINATION_DIR})

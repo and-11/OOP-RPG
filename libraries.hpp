@@ -16,4 +16,5 @@
 
 #include <iomanip>
 
+#include <SFML/Graphics.hpp>
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include "game.hpp"
 #include "functions.hpp"
 #include "exception.hpp"
