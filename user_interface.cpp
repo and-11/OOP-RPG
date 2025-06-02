@@ -177,7 +177,7 @@ void UI::display_items(Game *current_level)
         if (displayButton(window, sf::Vector2f( offset ,position  ), sf::Vector2f(200.f, 60.f), "POTION "+std::to_string(i), font))
         {
             item_selected = i;
-            std::cout << "ITEM " + std::to_string( i ) + " clicked!\n";            
+            std::cout << "item " + std::to_string( i+1 ) + "\n";            
         }
     }
 }
@@ -200,7 +200,7 @@ void UI::display_entity(Game *current_level)
         if (displayButton(window, sf::Vector2f( offset ,position  ), sf::Vector2f(200.f, 60.f), "HERO "+std::to_string(i), font))
         {
             player_selected = i;
-            std::cout << "PLAYER " + std::to_string( i ) + " clicked!\n";            
+            // std::cout << "PLAYER " + std::to_string( i ) + " clicked!\n";            
         }
     }
 
@@ -210,7 +210,7 @@ void UI::display_entity(Game *current_level)
         if (displayButton(window, sf::Vector2f( window_lengt-offset -200 , position ), sf::Vector2f(200.f, 60.f), "ENEMY "+std::to_string(i), font))
         {
             enemy_selected = i;
-            std::cout << "  ENEMYE " + std::to_string( i ) + " clicked!\n";            
+            // std::cout << "  ENEMYE " + std::to_string( i ) + " clicked!\n";            
         }
     }
 
@@ -246,12 +246,6 @@ void UI::start()
     //////////////////////////////////////////////////////////////////////////////          ACTUALY START
 
     int index_level = 0;
-    bool lose = false;
-    visitor_is_over vis;
-
-        /// eventual adauga visitor inapoi 
-
-        // current_level->prepare_fight();  when next level
     
     Game *current_level = &levels[ 0 ];
     current_level->prepare_fight();
@@ -259,12 +253,15 @@ void UI::start()
 
     int player_to_attack ;
 
+    
+    current_level->show_status();
+
     while (window.isOpen())
     {
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed or current_level->count_players()==0 or index_level == levels.size() )
+            if (event.type == sf::Event::Closed or current_level->count_players()==0 or index_level == int(levels.size()) )
                 window.close();
         }
 
@@ -279,12 +276,15 @@ void UI::start()
         // std::cout << current_level->count_enemies() <<"\n";  
         if( !current_level->count_enemies() )   /// next level
         {
+            clear_window();
             current_level->load();
-            if ( index_level < levels.size() - 1)
+            if ( index_level < int(levels.size()) - 1)
             {
                 current_level->game_transfer(levels[index_level + 1]);
                 current_level = &levels[ index_level+1 ];
                 current_level->prepare_fight();
+                current_level->show_status();
+
             }
             index_level++;
         }
@@ -298,7 +298,8 @@ void UI::start()
             if (displayButton(window, sf::Vector2f( window_lengt/3+100, window_height -100 ), sf::Vector2f(200.f, 60.f), "Item", font))
             {
                 state = CHOSE_ACTION;
-                std::cout << "ITEM clicked! " << " \n" ;           
+                std::cout << "Select item " << " \n" ;           
+                current_level->show_items();
             }
         }
 
@@ -311,21 +312,21 @@ void UI::start()
                 player_to_attack = 0;
                 enemy_selected = -1;
 
-                std::cout << "Atacam frate \n" ;           
+                std::cout << "Attack \n" ;           
             }
 
             if (displayButton(window, sf::Vector2f( window_lengt/3+50, window_height -100 ), sf::Vector2f(200.f, 60.f), "Item", font))
             {
                 state = USE_ITEM;
 
-                std::cout << "ITEM clicked! "  << " \n" ;     
+                std::cout << "Select item "  << " \n" ;     
             }
 
             if (displayButton(window, sf::Vector2f( window_lengt/3+300, window_height -100 ), sf::Vector2f(200.f, 60.f), "Info", font))
             {
                 state = SEE_DETAILS;
 
-                std::cout << "DETAILS clicked! "  << " \n" ;     
+                std::cout << "See details "  << " \n" ;     
             }
             
         }   
@@ -347,6 +348,8 @@ void UI::start()
                 state = CHOSE_ACTION;
                 item_selected = -1;
                 current_level->enemy_turn();
+                current_level->show_status();
+                
             }
             if( enemy_selected != -1 )
             {
@@ -354,6 +357,7 @@ void UI::start()
                 state = CHOSE_ACTION;
                 item_selected = -1;      
                 current_level->enemy_turn();
+                current_level->show_status();
             }
         }
         if( state == ATTACK )
@@ -365,7 +369,10 @@ void UI::start()
                 state = CHOSE_ACTION ;
 
             if( player_to_attack == current_level->count_players() )
+            {
                 current_level->enemy_turn();
+                current_level->show_status();
+            }
 
 
             if( enemy_selected != -1 )

@@ -70,14 +70,6 @@ void setup()
     /// ENEMIES
 
 ////
-/// FOR TEST
-x= std::make_shared<Goblin>( 83 );
-level.add_creature( x );
-
-joc.Add_level(level);
-level.reset();
-
-
 
     /// lvl 1
     x= std::make_shared<Skeleton>( 2 );
