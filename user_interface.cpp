@@ -337,25 +337,38 @@ void UI::chose_action(Game *current_level)
     }
 }
 
-void UI::display_level(Game *current_level)
+void UI::display_entity(Game *current_level)
 {
     int ct_players = current_level->count_players();
     int ct_enemies = current_level->count_enemies();
 
     int position_up = 100;
-    int position_down = window_height - 100;
+    int position_down = window_height - 300;
+
+    // std::cout << current_level <<"\n";
+
+    const int offset = 100;
 
     for (int i = 0; i < ct_players; i++)
     {
-        int position = position_up + (position_down - position_up) / (ct_players - 1) * i;
-
-        // if (displayButton(window, sf::Vector2f(325.f, 150.f), sf::Vector2f(200.f, 60.f), "Button 1", font))
-            std::cout << "Button 1 clicked!\n";
-
-        // if (displayAnimatedButton(window, sf::Vector2f(300.f, 300.f), sf::Vector2f(300.f, 300.f), gifFrames, 0.1f, animationClock)) {
-        //     std::cout << "GIF button clicked!\n";
-        // }
+        int position = position_up + (position_down - position_up) / std::max( (ct_players - 1),1 ) * i;
+        if (displayButton(window, sf::Vector2f( offset ,position  ), sf::Vector2f(200.f, 60.f), "HERO "+std::to_string(i), font))
+        {
+            player_selected = i;
+            std::cout << "PLAYER " + std::to_string( i ) + " clicked!\n";            
+        }
     }
+
+    for (int i = 0; i < ct_enemies; i++)
+    {
+        int position = position_up + (position_down - position_up) / std::max( (ct_enemies - 1),1 ) * i;
+        if (displayButton(window, sf::Vector2f( window_lengt-offset -200 , position ), sf::Vector2f(200.f, 60.f), "ENEMY "+std::to_string(i), font))
+        {
+            enemy_selected = i;
+            std::cout << "  ENEMYE " + std::to_string( i ) + " clicked!\n";            
+        }
+    }
+
 }
 
 void UI::start()
@@ -366,6 +379,7 @@ void UI::start()
     // sf::RenderWindow window(sf::VideoMode(window_lengt, window_height), "OOP RPG");
 
     // window(sf::VideoMode(window_lengt, window_height), "OOP RPG");
+
 
     sf::Texture backgroundTexture; /// BACKGROUND
     if (!backgroundTexture.loadFromFile("background.png"))
@@ -385,54 +399,99 @@ void UI::start()
     sf::Clock animationClock;
 
     //////////////////////////////////////////////////////////////////////////////          ACTUALY START
+
+    int index_level = 0;
+    bool lose = false;
+    visitor_is_over vis;
+
+        /// eventual adauga visitor inapoi 
+
+        // current_level->prepare_fight();  when next level
+    
+    Game *current_level = &levels[ 0 ];
+    current_level->prepare_fight();
+
+    bool potion_menu_visible = 0;
+    bool all_menu_visible = 1;
+
+    int player_to_attack ;
+
     while (window.isOpen())
     {
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed or current_level->count_players()==0 or index_level == levels.size() )
                 window.close();
         }
 
         window.clear();                // still keep this
-        window.draw(backgroundSprite); // draw background
+        // window.draw(backgroundSprite); // draw background
 
-        bool lose = false;
-        visitor_is_over vis;
 
-        for (size_t i = 0; i < levels.size(); i++)
+        display_entity(current_level);
+        
+        std::cout << current_level->count_enemies() <<"\n";  
+        if( !current_level->count_enemies() )   /// next level
         {
-            std::cout << "LEVEL " << i << ":\n";
-            Game *current_level = &levels[i];
-            current_level->prepare_fight();
-            // display_level(current_level);
-
-                // while (!current_level->accept_visit(vis))
-                // {
-                //     current_level->show_status();
-                //     chose_action(current_level);
-                //     current_level->enemy_turn();
-                // }
-
-                // if (current_level->is_game_lost())
-                // {
-                //     lose = true;
-                //     break;
-                // }
-                // else if (i < levels.size() - 1)
-                // {
-                //     Game::load();
-                //     clear_window();
-                //     current_level->game_transfer(levels[i + 1]);
-                // }
-                // std::cout << "\033[32mYou passed level " << i << "\n\033[0m\n";
+            current_level->load();
+            if ( index_level < levels.size() - 1)
+            {
+                current_level->game_transfer(levels[index_level + 1]);
+                current_level = &levels[ index_level+1 ];
+            }
+            index_level++;
         }
 
-        if (!lose)
+
+        if( state == CHOSE_ACTION )
         {
-            std::cout << "\033[32m\nCONGRATULATIONS\nYOU WON THE GAME!!!\033[0m\n\n\n";
+
+            if (displayButton(window, sf::Vector2f( 50, window_height -100 ), sf::Vector2f(200.f, 60.f), "Attack", font))
+            {
+                state = ATTACK ;
+                player_to_attack = 0;
+                enemy_selected = -1;
+
+                std::cout << "Atacam frate \n" ;           
+            }
+
+            if (displayButton(window, sf::Vector2f( window_lengt/3+100, window_height -100 ), sf::Vector2f(200.f, 60.f), "Item", font))
+            {
+                potion_menu_visible = !potion_menu_visible; 
+                std::cout << "ITEM clicked! " << potion_menu_visible << " \n" ;           
+            }
+            
+            if( potion_menu_visible )
+            {
+                // display_potions()
+            }
+        }   
+        if( state == ATTACK )
+        {
+            displayButton(window, sf::Vector2f( 50, window_height -100 ), sf::Vector2f(300.f, 60.f),
+            "chose a target for " + std::to_string( player_to_attack+1 ) + "to attack" , font) ;
+
+            if( player_to_attack == current_level->count_players() )
+                current_level->enemy_turn();
+
+            if( player_to_attack == current_level->count_players() or !current_level->count_enemies() )
+                state = CHOSE_ACTION ;
+
+            if( enemy_selected != -1 )
+            {
+                current_level->count_attack( player_to_attack+1, enemy_selected+1 );
+                
+                enemy_selected = -1;
+                player_to_attack ++ ;
+            }
         }
-        window.close();
+        
+
+                            
+                
+
+        
 
         window.display();
     }
@@ -445,4 +504,5 @@ UI::UI() : window(sf::VideoMode(window_lengt, window_height), "OOP RPG")
         std::cerr << "Failed to load font\n";
         return;
     }
+    state = CHOSE_ACTION;
 }

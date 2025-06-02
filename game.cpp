@@ -126,6 +126,7 @@ std::shared_ptr<Entity> Game::get_xth_player(int ct) {
 }
 
 void Game::count_attack(int ct_player, int ct_enemy) {
+    // std::cerr << "s-a ajuns";
     auto pl = get_xth_player(ct_player);
     auto en = get_xth_enemy(ct_enemy);
     attack(pl, en);
