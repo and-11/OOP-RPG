@@ -1,6 +1,10 @@
 name: 'Run cppcheck'
 description: 'Install and run cppcheck'
 
+-name: Install SFML
+run: sudo apt-get update && sudo apt-get install -y libsfml-dev
+
+
 runs:
   using: "composite"
   steps:
