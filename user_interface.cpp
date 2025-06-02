@@ -2,7 +2,6 @@
 
 #include <map>
 
-// Custom-size text button
 bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const sf::Vector2f &size, const std::string &text, sf::Font &font)
 {
 
@@ -50,110 +49,7 @@ bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const
     return isClicked;
 }
 
-// // Custom-size image button
-// bool displayImageButton(sf::RenderWindow &window, const sf::Vector2f &position, const sf::Vector2f &size, sf::Sprite &sprite)
-// {
-//     static std::map<std::string, bool> holdMap;
-//     std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
-//     bool &isHeld = holdMap[key];
 
-//     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-//     bool isHovered = false, isClicked = false;
-
-//     sf::RectangleShape button(size);
-//     button.setPosition(position);
-
-//     if (button.getGlobalBounds().contains((float)mousePos.x, (float)mousePos.y))
-//     {
-//         isHovered = true;
-//         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-//         {
-//             if (!isHeld)
-//             {
-//                 isClicked = true;
-//                 isHeld = true;
-//             }
-//         }
-//         else
-//         {
-//             isHeld = false;
-//         }
-//     }
-//     else
-//     {
-//         isHeld = false;
-//     }
-
-//     button.setFillColor(isClicked ? sf::Color::Green : (isHovered ? sf::Color::Red : sf::Color::Blue));
-//     window.draw(button);
-
-//     sprite.setPosition(position);
-//     sprite.setScale(
-//         size.x / sprite.getTexture()->getSize().x,
-//         size.y / sprite.getTexture()->getSize().y);
-//     window.draw(sprite);
-
-//     return isClicked;
-// }
-
-// bool displayAnimatedButton(
-//     sf::RenderWindow &window,
-//     const sf::Vector2f &position,
-//     const sf::Vector2f &size,
-//     const std::vector<sf::Texture> &frames,
-//     float frameDuration,
-//     sf::Clock &animationClock)
-// {
-//     static std::map<std::string, bool> holdMap;
-//     std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
-//     bool &isHeld = holdMap[key];
-
-//     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-//     bool isHovered = false, isClicked = false;
-
-//     sf::RectangleShape button(size);
-//     button.setPosition(position);
-
-//     if (button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
-//     {
-//         isHovered = true;
-//         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-//         {
-//             if (!isHeld)
-//             {
-//                 isClicked = true;
-//                 isHeld = true;
-//             }
-//         }
-//         else
-//         {
-//             isHeld = false;
-//         }
-//     }
-//     else
-//     {
-//         isHeld = false;
-//     }
-
-//     // No color background if sprite fully covers it — optional:
-//     // button.setFillColor(...);
-//     // window.draw(button);
-
-//     // Get current animation frame
-//     int frameIndex = static_cast<int>((animationClock.getElapsedTime().asSeconds() / frameDuration)) % frames.size();
-//     sf::Sprite sprite(frames[frameIndex]);
-
-//     // Scale sprite to exactly match button size
-//     sf::Vector2u texSize = sprite.getTexture()->getSize();
-//     float scaleX = size.x / texSize.x;
-//     float scaleY = size.y / texSize.y;
-//     sprite.setScale(scaleX, scaleY);
-//     sprite.setPosition(position);
-
-//     window.draw(sprite);
-
-//     return isClicked;
-// }
 
 void UI::Add_level(const Game &x)
 {
