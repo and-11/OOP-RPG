@@ -439,6 +439,7 @@ void UI::start()
             {
                 current_level->game_transfer(levels[index_level + 1]);
                 current_level = &levels[ index_level+1 ];
+                current_level->prepare_fight();
             }
             index_level++;
         }
