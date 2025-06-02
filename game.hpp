@@ -47,8 +47,8 @@ public:
     std::string th_player_name(int i);
     void show_enemy_details(int ct);
 
-    void count_item_use_enemy(const std::shared_ptr<Item>& i, int ct_enemy);
-    void count_item_use_player(const std::shared_ptr<Item>& i, int ct_player);
+    void count_item_use_enemy(int i, int ct_enemy);
+    void count_item_use_player(int i, int ct_player);
 
     void reset();
     static void load();

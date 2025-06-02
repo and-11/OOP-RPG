@@ -183,13 +183,13 @@ void Game::show_enemy_details(int ct) {
     ene->show_informations();
 }
 
-void Game::count_item_use_enemy(const std::shared_ptr<Item>& i, int ct_enemy) {
-    i->use(*get_xth_enemy(ct_enemy));
+void Game::count_item_use_enemy(int item, int ct_enemy) {
+    get_xth_item(item)->use(*get_xth_enemy(ct_enemy));
     std::cout << "\n";
 }
 
-void Game::count_item_use_player(const std::shared_ptr<Item>& i, int ct_player) {
-    i->use(*get_xth_player(ct_player));
+void Game::count_item_use_player(int item, int ct_player) {
+    get_xth_item(item)->use(*get_xth_player(ct_player));
     std::cout << "\n";
 }
 
