@@ -47,11 +47,11 @@ void setup()
     x = director.get_player();
     level.add_creature( x );
 
-    // player_builder = std::make_shared<Shield_Player_Builder>() ;
-    // director.set_player_builder( player_builder );
-    // director.build_player();
-    // x = director.get_player();
-    // level.add_creature( x );
+    player_builder = std::make_shared<Shield_Player_Builder>() ;
+    director.set_player_builder( player_builder );
+    director.build_player();
+    x = director.get_player();
+    level.add_creature( x );
 
     /// POTIONS
     name = "Healing";
@@ -74,66 +74,66 @@ void setup()
     level.add_creature( x );
     x= std::make_shared<Crow>( 3 );
     level.add_creature( x );
-    // x= std::make_shared<Skeleton>( 1 );
-    // level.add_creature( x );
-    // x= std::make_shared<Wolf>( 2 );
-    // level.add_creature( x );
+    x= std::make_shared<Skeleton>( 1 );
+    level.add_creature( x );
+    x= std::make_shared<Wolf>( 2 );
+    level.add_creature( x );
 
     joc.Add_level(level);
     level.reset();
 
     // /// lvl 2
-    // x= std::make_shared<Orc>( 5 );
-    // level.add_creature( x );
+    x= std::make_shared<Orc>( 5 );
+    level.add_creature( x );
     x= std::make_shared<Goblin>( 3 );
     level.add_creature( x );
 
     joc.Add_level(level);
     level.reset();
 
-    // /// lvl 3
-    // x= std::make_shared<Wolf>( 2 );
-    // level.add_creature( x );
-    // x= std::make_shared<Skeleton>( 1 );
-    // level.add_creature( x );
-    // x= std::make_shared<Wolf>( 1 );
-    // level.add_creature( x );
-    // x= std::make_shared<Skeleton>( 2 );
-    // level.add_creature( x );
-    // x= std::make_shared<Skeleton>( 2 );
-    // level.add_creature( x );
-    // x= std::make_shared<Orc>( 2 );
-    // level.add_creature( x );
+    /// lvl 3
+    x= std::make_shared<Wolf>( 2 );
+    level.add_creature( x );
+    x= std::make_shared<Skeleton>( 1 );
+    level.add_creature( x );
+    x= std::make_shared<Wolf>( 1 );
+    level.add_creature( x );
+    x= std::make_shared<Skeleton>( 2 );
+    level.add_creature( x );
+    x= std::make_shared<Skeleton>( 2 );
+    level.add_creature( x );
+    x= std::make_shared<Orc>( 2 );
+    level.add_creature( x );
 
-    // joc.Add_level(level);
-    // level.reset();
+    joc.Add_level(level);
+    level.reset();
 
-    // /// lvl 4
-    // x= std::make_shared<Goblin>( 83 );
-    // level.add_creature( x );
+    /// lvl 4
+    x= std::make_shared<Goblin>( 83 );
+    level.add_creature( x );
 
-    // joc.Add_level(level);
-    // level.reset();
+    joc.Add_level(level);
+    level.reset();
 
-    // /// lvl 5
-    // x= std::make_shared<Orc>( 1 );
-    // level.add_creature( x );
-    // x= std::make_shared<Orc>( 1 );
-    // level.add_creature( x );
-    // x= std::make_shared<Orc>( 1 );
-    // level.add_creature( x );
+    /// lvl 5
+    x= std::make_shared<Orc>( 1 );
+    level.add_creature( x );
+    x= std::make_shared<Orc>( 1 );
+    level.add_creature( x );
+    x= std::make_shared<Orc>( 1 );
+    level.add_creature( x );
 
-    // joc.Add_level(level);
-    // level.reset();
+    joc.Add_level(level);
+    level.reset();
 
-    // /// lvl 6
-    // x= std::make_shared<Orc>( 7 );
-    // level.add_creature( x );
-    // x= std::make_shared<Wolf>( 7 );
-    // level.add_creature( x );
+    /// lvl 6
+    x= std::make_shared<Orc>( 7 );
+    level.add_creature( x );
+    x= std::make_shared<Wolf>( 7 );
+    level.add_creature( x );
 
-    // joc.Add_level(level);
-    // level.reset();
+    joc.Add_level(level);
+    level.reset();
 
 
     ///     -   --- -   -   -   -   -   -   --  -   -
