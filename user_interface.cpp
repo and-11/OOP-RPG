@@ -431,7 +431,7 @@ void UI::start()
 
         display_entity(current_level);
         
-        std::cout << current_level->count_enemies() <<"\n";  
+        // std::cout << current_level->count_enemies() <<"\n";  
         if( !current_level->count_enemies() )   /// next level
         {
             current_level->load();
@@ -471,13 +471,14 @@ void UI::start()
         if( state == ATTACK )
         {
             displayButton(window, sf::Vector2f( 50, window_height -100 ), sf::Vector2f(300.f, 60.f),
-            "chose a target for " + std::to_string( player_to_attack+1 ) + "to attack" , font) ;
-
-            if( player_to_attack == current_level->count_players() )
-                current_level->enemy_turn();
+            "chose a target for " + std::to_string( player_to_attack+1 ) + " to attack" , font) ;
 
             if( player_to_attack == current_level->count_players() or !current_level->count_enemies() )
                 state = CHOSE_ACTION ;
+                
+            if( player_to_attack == current_level->count_players() )
+                current_level->enemy_turn();
+
 
             if( enemy_selected != -1 )
             {
