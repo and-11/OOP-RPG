@@ -65,12 +65,12 @@ void UI::display_items(Game *current_level)
 
     // std::cout << current_level <<"\n";
 
-    const int offset = 100;
+    
 
     for (int i = 0; i < ct_items; i++)
     {
         int position = position_up + (position_down - position_up) / std::max( (ct_items - 1),1 ) * i;
-        if (displayButton(window, sf::Vector2f( offset ,position  ), sf::Vector2f(200.f, 60.f), "POTION "+std::to_string(i), font))
+        if (displayButton(window, sf::Vector2f( horizontal_offset ,position  ), sf::Vector2f(200.f, 60.f), "POTION "+std::to_string(i), font))
         {
             item_selected = i;
             std::cout << "item " + std::to_string( i+1 ) + "\n";            
@@ -88,12 +88,10 @@ void UI::display_entity(Game *current_level)
 
     // std::cout << current_level <<"\n";
 
-    const int offset = 100;
-
     for (int i = 0; i < ct_players; i++)
     {
         int position = position_up + (position_down - position_up) / std::max( (ct_players - 1),1 ) * i;
-        if (displayButton(window, sf::Vector2f( offset ,position  ), sf::Vector2f(200.f, 60.f), "HERO "+std::to_string(i), font))
+        if (displayButton(window, sf::Vector2f( horizontal_offset ,position  ), sf::Vector2f(200.f, 60.f), "HERO "+std::to_string(i), font))
         {
             player_selected = i;
             // std::cout << "PLAYER " + std::to_string( i ) + " clicked!\n";            
@@ -103,7 +101,7 @@ void UI::display_entity(Game *current_level)
     for (int i = 0; i < ct_enemies; i++)
     {
         int position = position_up + (position_down - position_up) / std::max( (ct_enemies - 1),1 ) * i;
-        if (displayButton(window, sf::Vector2f( window_lengt-offset -200 , position ), sf::Vector2f(200.f, 60.f), "ENEMY "+std::to_string(i), font))
+        if (displayButton(window, sf::Vector2f( window_lengt-horizontal_offset -200 , position ), sf::Vector2f(200.f, 60.f), "ENEMY "+std::to_string(i), font))
         {
             enemy_selected = i;
             // std::cout << "  ENEMYE " + std::to_string( i ) + " clicked!\n";            
@@ -191,7 +189,7 @@ void UI::start()
             if( item_selected != -1 )
                 state = TARGET_SELECTION_ITEM;
             
-            if (displayButton(window, sf::Vector2f( window_lengt/3+100, window_height -100 ), sf::Vector2f(200.f, 60.f), "Item", font))
+            if (displayButton(window, sf::Vector2f( horizontal_offset + (window_lengt-2*horizontal_offset)/3 +square_button_size , window_height -vertical_offset ), sf::Vector2f(square_button_size, square_button_size), "Item", font))
             {
                 state = CHOSE_ACTION;
                 std::cout << "Select item " << " \n" ;           
@@ -202,7 +200,7 @@ void UI::start()
         if( state == CHOSE_ACTION )
         {
 
-            if (displayButton(window, sf::Vector2f( 50, window_height -100 ), sf::Vector2f(200.f, 60.f), "Attack", font))
+            if (displayButton(window, sf::Vector2f( horizontal_offset, window_height -vertical_offset ), sf::Vector2f(square_button_size, square_button_size), "Attack", font))
             {
                 state = ATTACK ;
                 player_to_attack = 0;
@@ -211,14 +209,14 @@ void UI::start()
                 std::cout << "Attack \n" ;           
             }
 
-            if (displayButton(window, sf::Vector2f( window_lengt/3+50, window_height -100 ), sf::Vector2f(200.f, 60.f), "Item", font))
+            if (displayButton(window, sf::Vector2f( horizontal_offset + (window_lengt-2*horizontal_offset)/3 +square_button_size , window_height -vertical_offset ), sf::Vector2f(square_button_size, square_button_size), "Item", font))
             {
                 state = USE_ITEM;
 
                 std::cout << "Select item "  << " \n" ;     
             }
 
-            if (displayButton(window, sf::Vector2f( window_lengt/3+300, window_height -100 ), sf::Vector2f(200.f, 60.f), "Info", font))
+            if (displayButton(window, sf::Vector2f( window_lengt - horizontal_offset - square_button_size , window_height -vertical_offset ), sf::Vector2f(square_button_size, square_button_size), "Info", font))
             {
                 state = SEE_DETAILS;
 
@@ -258,7 +256,7 @@ void UI::start()
         }
         if( state == ATTACK )
         {
-            displayButton(window, sf::Vector2f( 50, window_height -100 ), sf::Vector2f(300.f, 60.f),
+            displayButton(window, sf::Vector2f( horizontal_offset , window_height - vertical_offset ), sf::Vector2f(300.f, 60.f),
             "chose a target for " + std::to_string( player_to_attack+1 ) + " to attack" , font) ;
 
             if( player_to_attack == current_level->count_players() or !current_level->count_enemies() )

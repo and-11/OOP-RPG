@@ -15,12 +15,15 @@ enum STATES
     SEE_DETAILS
 };
 
+
+
 class UI
 {
 private:
     std::vector<Game> levels;
-    const int window_lengt = 800;
-    const int window_height = 600;
+
+    const int window_lengt = 1000;
+    const int window_height = 750;
     int player_selected = 0;
     int enemy_selected = 0;
     int item_selected;
@@ -29,6 +32,11 @@ private:
     sf::RenderWindow window;
     sf::Font font;
 
+    const int horizontal_offset = 100;
+    const int vertical_offset = 150;
+    
+    const int square_button_size = 100;
+    
     void display_entity(Game *current_level);
     void display_items(Game *current_level);
 public:
