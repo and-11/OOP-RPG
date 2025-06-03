@@ -24,7 +24,7 @@ void Knight_Player_Builder::build_player()  {
     player->set_level(1);
     
     ///ANIMATION
-    player->add_frames( 8, "orc_walk_frames" );
+    player->add_frames( 4, "knight_walk_frames" );
 }
 
 void Archer_Player_Builder::build_player()  {
@@ -42,7 +42,7 @@ void Archer_Player_Builder::build_player()  {
     player->set_level(1);
     
     ///ANIMATION
-    player->add_frames( 8, "orc_walk_frames" );
+    player->add_frames( 2, "archer_walk_frames" );
 }
 
 void Shield_Player_Builder::build_player() {
@@ -60,7 +60,7 @@ void Shield_Player_Builder::build_player() {
     player->set_level(1);
     
     ///ANIMATION
-    player->add_frames( 8, "orc_walk_frames" );
+    player->add_frames( 6, "shield_walk_frames" );
 }
 
 

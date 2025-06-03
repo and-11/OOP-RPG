@@ -12,12 +12,21 @@ bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     bool isHovered = false, isClicked = false;
 
+    // Create base button shape
     sf::RectangleShape button(size);
     button.setPosition(position);
 
+    // Check for hover and adjust size
     if (button.getGlobalBounds().contains((float)mousePos.x, (float)mousePos.y))
     {
         isHovered = true;
+
+        // Scale up by 1.1x
+        sf::Vector2f scaledSize = size * 1.1f;
+        sf::Vector2f offset = (scaledSize - size) / 2.0f;
+        button.setSize(scaledSize);
+        button.setPosition(position - offset);
+
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
             if (!isHeld)
@@ -36,22 +45,29 @@ bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const
         isHeld = false;
     }
 
-    button.setFillColor(isClicked ? sf::Color::Green : (isHovered ? sf::Color::Red : sf::Color::Blue));
+    // Transparent background
+    button.setFillColor(sf::Color(0, 0, 0, 0)); // Fully transparent
 
-    // Create text with doubled character size
-    sf::Text buttonText(text, font, 32); // Was 16
+    // Setup text
+    sf::Text buttonText(text, font, 32);
     buttonText.setFillColor(sf::Color::White);
 
-    // Center the text
+    // Get new button position and size for centering
+    sf::Vector2f finalSize = button.getSize();
+    sf::Vector2f finalPosition = button.getPosition();
+
+    // Center the text in the scaled button
     sf::FloatRect textBounds = buttonText.getLocalBounds();
     buttonText.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
-    buttonText.setPosition(position.x + size.x / 2.0f, position.y + size.y / 2.0f);
+    buttonText.setPosition(finalPosition.x + finalSize.x / 2.0f, finalPosition.y + finalSize.y / 2.0f);
 
     window.draw(button);
     window.draw(buttonText);
 
     return isClicked;
 }
+
+
 
 bool displayAnimatedButton(
     sf::RenderWindow &window,
@@ -60,7 +76,8 @@ bool displayAnimatedButton(
     const std::vector<sf::Texture> &frames,
     float frameDuration,
     sf::Clock &animationClock,
-    bool h_flip = false)  // new parameter with default false
+    bool h_flip = false,
+    float spriteScaleFactor = 5.f)  // <-- New parameter
 {
     static std::map<std::string, bool> holdMap;
     std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
@@ -69,12 +86,18 @@ bool displayAnimatedButton(
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     bool isHovered = false, isClicked = false;
 
+    sf::Vector2f drawSize = size;
+    sf::Vector2f drawPosition = position;
+
     sf::RectangleShape button(size);
     button.setPosition(position);
 
     if (button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
     {
         isHovered = true;
+        drawSize = size * 1.3f;
+        drawPosition = position - (drawSize - size) / 2.f;
+
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
             if (!isHeld)
@@ -93,37 +116,35 @@ bool displayAnimatedButton(
         isHeld = false;
     }
 
-    // Set button background color
-    button.setFillColor(isClicked ? sf::Color::Green : (isHovered ? sf::Color(200, 100, 100) : sf::Color(50, 50, 150)));
-    window.draw(button);  // Draw background first
+    button.setSize(drawSize);
+    button.setPosition(drawPosition);
 
-    // Get current animation frame
+    button.setFillColor(isClicked ? sf::Color::Green : (isHovered ? sf::Color(200, 100, 100) : sf::Color(50, 50, 150)));
+    window.draw(button);
+
+    // Animate the sprite
     int frameIndex = static_cast<int>((animationClock.getElapsedTime().asSeconds() / frameDuration)) % frames.size();
     sf::Sprite sprite(frames[frameIndex]);
 
-    // Get texture size
     sf::Vector2u texSize = sprite.getTexture()->getSize();
 
-    float scaleFactor = 5.f; // Adjustable multiplier
-    float scaleX = (size.x / texSize.x) * scaleFactor;
-    float scaleY = (size.y / texSize.y) * scaleFactor;
+    float scaleX = (drawSize.x / texSize.x) * spriteScaleFactor;
+    float scaleY = (drawSize.y / texSize.y) * spriteScaleFactor;
 
-    // Set origin to center for proper flipping and positioning
     sprite.setOrigin(texSize.x / 2.f, texSize.y / 2.f);
 
-    // Flip horizontally if requested
     if (h_flip)
         scaleX = -scaleX;
 
     sprite.setScale(scaleX, scaleY);
-
-    // Position sprite centered on the button
-    sprite.setPosition(position.x + size.x / 2.f, position.y + size.y / 2.f);
+    sprite.setPosition(drawPosition.x + drawSize.x / 2.f, drawPosition.y + drawSize.y / 2.f);
 
     window.draw(sprite);
 
     return isClicked;
 }
+
+
 
 
 
@@ -177,7 +198,8 @@ void UI::display_entity(Game *current_level)
 
 
         if (displayAnimatedButton(window, sf::Vector2f( horizontal_offset + i*30 ,position  ), sf_entity_box_size, 
-            current_level->get_xth_player(i+1)->get_frames() , 0.1f, animation_clock 
+            current_level->get_xth_player(i+1)->get_frames() , 0.1f, animation_clock, false,
+            1.3
         ) )
         {
             player_selected = i;
@@ -189,7 +211,8 @@ void UI::display_entity(Game *current_level)
     {
         int position = position_up + (position_down - position_up) / std::max( (ct_enemies - 1),1 ) * i;
         if (displayAnimatedButton(window, sf::Vector2f( window_lengt-horizontal_offset -200 - i*30 , position ), sf_entity_box_size,
-            current_level->get_xth_enemy(i+1)->get_frames() , 0.1f, animation_clock , true
+            current_level->get_xth_enemy(i+1)->get_frames() , 0.1f, animation_clock , true,
+            1.4
         ) ) 
         {
             enemy_selected = i;
@@ -250,7 +273,7 @@ void UI::start()
         }
 
         window.clear();                // still keep this
-        // window.draw(backgroundSprite); // draw background
+        window.draw(backgroundSprite); // draw background
 
         player_selected = enemy_selected = -1;
 

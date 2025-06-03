@@ -6,7 +6,7 @@ Skeleton::Skeleton(int level)
     : Enemy(level, 3, 1, e_name, 1, 1)
 {
     /// ANIMATION
-    this->add_frames(8, "orc_walk_frames");
+    this->add_frames(4, "skeleton_walk_frames");
 }
 
 void Skeleton::show_informations()

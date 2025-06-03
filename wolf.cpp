@@ -6,7 +6,7 @@ Wolf::Wolf(int level)
     : Enemy(level, 6, 9, e_name, 0, 2)
 {
     /// ANIMATION
-    this->add_frames(8, "orc_walk_frames");
+    this->add_frames( 4, "wolf_walk_frames");
 }
 
 void Wolf::show_informations()

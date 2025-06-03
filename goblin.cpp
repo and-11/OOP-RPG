@@ -6,7 +6,7 @@ Goblin::Goblin(int level)
     : Enemy(level, 4, 5, e_name, 3, 1)
 {
     /// ANIMATION
-    this->add_frames(8, "orc_walk_frames");
+    this->add_frames(4, "goblin_walk_frames");
 }
 
 void Goblin::show_informations()
