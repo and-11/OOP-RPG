@@ -35,7 +35,7 @@ private:
     const int horizontal_offset = 100;
     const int vertical_offset = 150;
     
-    const int square_button_size = 100;
+    const int square_button_size = 120;
     
     void display_entity(Game *current_level);
     void display_items(Game *current_level);

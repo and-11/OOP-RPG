@@ -4,7 +4,6 @@
 
 bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const sf::Vector2f &size, const std::string &text, sf::Font &font)
 {
-
     static std::map<std::string, bool> holdMap;
 
     std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
@@ -39,15 +38,22 @@ bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const
 
     button.setFillColor(isClicked ? sf::Color::Green : (isHovered ? sf::Color::Red : sf::Color::Blue));
 
-    sf::Text buttonText(text, font, 16);
+    // Create text with doubled character size
+    sf::Text buttonText(text, font, 32); // Was 16
     buttonText.setFillColor(sf::Color::White);
-    buttonText.setPosition(position.x + 5, position.y + 5);
+
+    // Center the text
+    sf::FloatRect textBounds = buttonText.getLocalBounds();
+    buttonText.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+    buttonText.setPosition(position.x + size.x / 2.0f, position.y + size.y / 2.0f);
 
     window.draw(button);
     window.draw(buttonText);
 
     return isClicked;
 }
+
+
 
 
 
@@ -181,6 +187,7 @@ void UI::start()
 
             }
             index_level++;
+            state = CHOSE_ACTION;
         }
         if( state == USE_ITEM )
         {
@@ -192,8 +199,6 @@ void UI::start()
             if (displayButton(window, sf::Vector2f( horizontal_offset + (window_lengt-2*horizontal_offset)/3 +square_button_size , window_height -vertical_offset ), sf::Vector2f(square_button_size, square_button_size), "Item", font))
             {
                 state = CHOSE_ACTION;
-                std::cout << "Select item " << " \n" ;           
-                current_level->show_items();
             }
         }
 
@@ -214,6 +219,7 @@ void UI::start()
                 state = USE_ITEM;
 
                 std::cout << "Select item "  << " \n" ;     
+                current_level->show_items();
             }
 
             if (displayButton(window, sf::Vector2f( window_lengt - horizontal_offset - square_button_size , window_height -vertical_offset ), sf::Vector2f(square_button_size, square_button_size), "Info", font))
@@ -290,7 +296,7 @@ void UI::start()
 
 UI::UI() : window(sf::VideoMode(window_lengt, window_height), "OOP RPG")
 {
-    if (!font.loadFromFile("arial.ttf"))
+    if (!font.loadFromFile("SF Pixelate Bold.ttf"))
     {
         std::cerr << "Failed to load font\n";
         return;
