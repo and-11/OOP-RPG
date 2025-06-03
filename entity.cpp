@@ -26,11 +26,15 @@ int Entity::get_current_health() {
     return this->current_health;
 }
 
+std::vector<sf::Texture> Entity::get_frames(){
+    return frames;
+}
+
 void Entity::add_frames( int number_of_frames,std::string path )
 {
+    this->frames.clear(); /// ajuta la build
     for(int i = 0; i < number_of_frames; i++)
     {
-        this->frames.clear(); /// ajuta la build
          
         sf::Texture frame;
         if (!frame.loadFromFile( path + "/frame_" + std::to_string(i) + ".png")) {

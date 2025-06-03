@@ -53,15 +53,14 @@ bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const
     return isClicked;
 }
 
-
-
 bool displayAnimatedButton(
     sf::RenderWindow &window,
     const sf::Vector2f &position,
     const sf::Vector2f &size,
     const std::vector<sf::Texture> &frames,
     float frameDuration,
-    sf::Clock &animationClock)
+    sf::Clock &animationClock,
+    bool h_flip = false)  // new parameter with default false
 {
     static std::map<std::string, bool> holdMap;
     std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
@@ -94,25 +93,40 @@ bool displayAnimatedButton(
         isHeld = false;
     }
 
-    // No color background if sprite fully covers it — optional:
-    // button.setFillColor(...);
-    // window.draw(button);
+    // Set button background color
+    button.setFillColor(isClicked ? sf::Color::Green : (isHovered ? sf::Color(200, 100, 100) : sf::Color(50, 50, 150)));
+    window.draw(button);  // Draw background first
 
     // Get current animation frame
     int frameIndex = static_cast<int>((animationClock.getElapsedTime().asSeconds() / frameDuration)) % frames.size();
     sf::Sprite sprite(frames[frameIndex]);
 
-    // Scale sprite to exactly match button size
+    // Get texture size
     sf::Vector2u texSize = sprite.getTexture()->getSize();
-    float scaleX = size.x / texSize.x;
-    float scaleY = size.y / texSize.y;
+
+    float scaleFactor = 5.f; // Adjustable multiplier
+    float scaleX = (size.x / texSize.x) * scaleFactor;
+    float scaleY = (size.y / texSize.y) * scaleFactor;
+
+    // Set origin to center for proper flipping and positioning
+    sprite.setOrigin(texSize.x / 2.f, texSize.y / 2.f);
+
+    // Flip horizontally if requested
+    if (h_flip)
+        scaleX = -scaleX;
+
     sprite.setScale(scaleX, scaleY);
-    sprite.setPosition(position);
+
+    // Position sprite centered on the button
+    sprite.setPosition(position.x + size.x / 2.f, position.y + size.y / 2.f);
 
     window.draw(sprite);
 
     return isClicked;
 }
+
+
+
 
 
 
@@ -155,20 +169,16 @@ void UI::display_entity(Game *current_level)
 
     // std::cout << current_level <<"\n";
 
+    sf::Vector2f sf_entity_box_size(entity_box_size ,entity_box_size );
+
     for (int i = 0; i < ct_players; i++)
     {
         int position = position_up + (position_down - position_up) / std::max( (ct_players - 1),1 ) * i;
 
-// bool displayAnimatedButton(
-//     sf::RenderWindow &window,
-//     const sf::Vector2f &position,
-//     const sf::Vector2f &size,
-//     const std::vector<sf::Texture> &frames,
-//     float frameDuration,
-//     sf::Clock &animationClock)
 
-
-        if (displayButton(window, sf::Vector2f( horizontal_offset + i*30 ,position  ), sf::Vector2f(200.f, 60.f), "HERO "+std::to_string(i), font))
+        if (displayAnimatedButton(window, sf::Vector2f( horizontal_offset + i*30 ,position  ), sf_entity_box_size, 
+            current_level->get_xth_player(i+1)->get_frames() , 0.1f, animation_clock 
+        ) )
         {
             player_selected = i;
             // std::cout << "PLAYER " + std::to_string( i ) + " clicked!\n";            
@@ -178,7 +188,9 @@ void UI::display_entity(Game *current_level)
     for (int i = 0; i < ct_enemies; i++)
     {
         int position = position_up + (position_down - position_up) / std::max( (ct_enemies - 1),1 ) * i;
-        if (displayButton(window, sf::Vector2f( window_lengt-horizontal_offset -200 - i*30 , position ), sf::Vector2f(200.f, 60.f), "ENEMY "+std::to_string(i), font))
+        if (displayAnimatedButton(window, sf::Vector2f( window_lengt-horizontal_offset -200 - i*30 , position ), sf_entity_box_size,
+            current_level->get_xth_enemy(i+1)->get_frames() , 0.1f, animation_clock , true
+        ) ) 
         {
             enemy_selected = i;
             // std::cout << "  ENEMYE " + std::to_string( i ) + " clicked!\n";            
@@ -212,7 +224,7 @@ void UI::start()
         float(windowSize.x) / textureSize.x,
         float(windowSize.y) / textureSize.y);
 
-    sf::Clock animationClock;
+    
 
     //////////////////////////////////////////////////////////////////////////////          ACTUALY START
 
@@ -226,6 +238,7 @@ void UI::start()
 
     
     current_level->show_status();
+
 
     while (window.isOpen())
     {

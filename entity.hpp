@@ -28,6 +28,8 @@ public:
 
     void add_frames( int number_of_frames,std::string path );
     
+    std::vector<sf::Texture> get_frames();
+
     Entity(); 
     Entity(const Entity& other);
     Entity& operator=(const Entity& other); 

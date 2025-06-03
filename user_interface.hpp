@@ -31,10 +31,12 @@ private:
 
     sf::RenderWindow window;
     sf::Font font;
+    sf::Clock animation_clock;
 
     const int horizontal_offset = 100;
     const int vertical_offset = 150;
-    
+    const int entity_box_size = 150;
+
     const int square_button_size = 120;
     
     void display_entity(Game *current_level);
