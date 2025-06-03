@@ -5,7 +5,7 @@ Item::Item() = default;
 Item::Item(const std::string& s) : name{s} {}
 
 std::string Item::get_name() const {
-    return "\033[36m" + name + "\033[0m";
+    return name ;
 }
 
 void Item::print(std::ostream& os) const {
