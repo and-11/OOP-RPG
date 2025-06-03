@@ -55,6 +55,67 @@ bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const
 
 
 
+bool displayAnimatedButton(
+    sf::RenderWindow &window,
+    const sf::Vector2f &position,
+    const sf::Vector2f &size,
+    const std::vector<sf::Texture> &frames,
+    float frameDuration,
+    sf::Clock &animationClock)
+{
+    static std::map<std::string, bool> holdMap;
+    std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
+    bool &isHeld = holdMap[key];
+
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    bool isHovered = false, isClicked = false;
+
+    sf::RectangleShape button(size);
+    button.setPosition(position);
+
+    if (button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+    {
+        isHovered = true;
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            if (!isHeld)
+            {
+                isClicked = true;
+                isHeld = true;
+            }
+        }
+        else
+        {
+            isHeld = false;
+        }
+    }
+    else
+    {
+        isHeld = false;
+    }
+
+    // No color background if sprite fully covers it — optional:
+    // button.setFillColor(...);
+    // window.draw(button);
+
+    // Get current animation frame
+    int frameIndex = static_cast<int>((animationClock.getElapsedTime().asSeconds() / frameDuration)) % frames.size();
+    sf::Sprite sprite(frames[frameIndex]);
+
+    // Scale sprite to exactly match button size
+    sf::Vector2u texSize = sprite.getTexture()->getSize();
+    float scaleX = size.x / texSize.x;
+    float scaleY = size.y / texSize.y;
+    sprite.setScale(scaleX, scaleY);
+    sprite.setPosition(position);
+
+    window.draw(sprite);
+
+    return isClicked;
+}
+
+
+
 
 
 void UI::Add_level(const Game &x)
@@ -97,7 +158,17 @@ void UI::display_entity(Game *current_level)
     for (int i = 0; i < ct_players; i++)
     {
         int position = position_up + (position_down - position_up) / std::max( (ct_players - 1),1 ) * i;
-        if (displayButton(window, sf::Vector2f( horizontal_offset ,position  ), sf::Vector2f(200.f, 60.f), "HERO "+std::to_string(i), font))
+
+// bool displayAnimatedButton(
+//     sf::RenderWindow &window,
+//     const sf::Vector2f &position,
+//     const sf::Vector2f &size,
+//     const std::vector<sf::Texture> &frames,
+//     float frameDuration,
+//     sf::Clock &animationClock)
+
+
+        if (displayButton(window, sf::Vector2f( horizontal_offset + i*30 ,position  ), sf::Vector2f(200.f, 60.f), "HERO "+std::to_string(i), font))
         {
             player_selected = i;
             // std::cout << "PLAYER " + std::to_string( i ) + " clicked!\n";            
@@ -107,7 +178,7 @@ void UI::display_entity(Game *current_level)
     for (int i = 0; i < ct_enemies; i++)
     {
         int position = position_up + (position_down - position_up) / std::max( (ct_enemies - 1),1 ) * i;
-        if (displayButton(window, sf::Vector2f( window_lengt-horizontal_offset -200 , position ), sf::Vector2f(200.f, 60.f), "ENEMY "+std::to_string(i), font))
+        if (displayButton(window, sf::Vector2f( window_lengt-horizontal_offset -200 - i*30 , position ), sf::Vector2f(200.f, 60.f), "ENEMY "+std::to_string(i), font))
         {
             enemy_selected = i;
             // std::cout << "  ENEMYE " + std::to_string( i ) + " clicked!\n";            
@@ -262,8 +333,8 @@ void UI::start()
         }
         if( state == ATTACK )
         {
-            displayButton(window, sf::Vector2f( horizontal_offset , window_height - vertical_offset ), sf::Vector2f(300.f, 60.f),
-            "chose a target for " + std::to_string( player_to_attack+1 ) + " to attack" , font) ;
+            displayButton(window, sf::Vector2f( window_lengt/2-400 , window_height - vertical_offset ), sf::Vector2f(600.f, 60.f),
+            "Chose a target for " + std::to_string( player_to_attack+1 ) + " to attack" , font) ;
 
             if( player_to_attack == current_level->count_players() or !current_level->count_enemies() )
                 state = CHOSE_ACTION ;
