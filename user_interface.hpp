@@ -35,7 +35,7 @@ private:
 
     const int horizontal_offset = 100;
     const int vertical_offset = 150;
-    const int entity_box_size = 150;
+    const int entity_box_size = 120;
 
     const int square_button_size = 120;
     

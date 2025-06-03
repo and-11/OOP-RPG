@@ -5,28 +5,17 @@
 bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const sf::Vector2f &size, const std::string &text, sf::Font &font)
 {
     static std::map<std::string, bool> holdMap;
-
     std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
     bool &isHeld = holdMap[key];
 
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     bool isHovered = false, isClicked = false;
 
-    // Create base button shape
-    sf::RectangleShape button(size);
-    button.setPosition(position);
-
-    // Check for hover and adjust size
-    if (button.getGlobalBounds().contains((float)mousePos.x, (float)mousePos.y))
+    // Use original button area for hover detection
+    sf::FloatRect baseBounds(position, size);
+    if (baseBounds.contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
     {
         isHovered = true;
-
-        // Scale up by 1.1x
-        sf::Vector2f scaledSize = size * 1.1f;
-        sf::Vector2f offset = (scaledSize - size) / 2.0f;
-        button.setSize(scaledSize);
-        button.setPosition(position - offset);
-
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
             if (!isHeld)
@@ -45,28 +34,38 @@ bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const
         isHeld = false;
     }
 
-    // Transparent background
-    button.setFillColor(sf::Color(0, 0, 0, 0)); // Fully transparent
+    // Compute scaled size and position if hovered
+    sf::Vector2f drawSize = size;
+    sf::Vector2f drawPosition = position;
+    float textScale = 1.0f;
 
-    // Setup text
+    if (isHovered)
+    {
+        drawSize *= 1.3f;
+        drawPosition = position - (drawSize - size) / 2.0f;
+        textScale = 1.3f;
+    }
+
+    // Transparent button (use outline if you want visual feedback)
+    sf::RectangleShape button(drawSize);
+    button.setPosition(drawPosition);
+    button.setFillColor(sf::Color(0, 0, 0, 0)); // fully transparent
+
+    // Create and center text
     sf::Text buttonText(text, font, 32);
+    buttonText.setScale(textScale, textScale);
     buttonText.setFillColor(sf::Color::White);
 
-    // Get new button position and size for centering
-    sf::Vector2f finalSize = button.getSize();
-    sf::Vector2f finalPosition = button.getPosition();
-
-    // Center the text in the scaled button
+    // Re-center text origin after scaling
     sf::FloatRect textBounds = buttonText.getLocalBounds();
     buttonText.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
-    buttonText.setPosition(finalPosition.x + finalSize.x / 2.0f, finalPosition.y + finalSize.y / 2.0f);
+    buttonText.setPosition(drawPosition.x + drawSize.x / 2.0f, drawPosition.y + drawSize.y / 2.0f);
 
     window.draw(button);
     window.draw(buttonText);
 
     return isClicked;
 }
-
 
 
 bool displayAnimatedButton(
@@ -77,7 +76,7 @@ bool displayAnimatedButton(
     float frameDuration,
     sf::Clock &animationClock,
     bool h_flip = false,
-    float spriteScaleFactor = 5.f)  // <-- New parameter
+    float spriteScaleFactor = 5.f)
 {
     static std::map<std::string, bool> holdMap;
     std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
@@ -86,16 +85,16 @@ bool displayAnimatedButton(
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     bool isHovered = false, isClicked = false;
 
+    // Base values
     sf::Vector2f drawSize = size;
     sf::Vector2f drawPosition = position;
 
-    sf::RectangleShape button(size);
-    button.setPosition(position);
-
-    if (button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+    // Use hover detection on original size
+    sf::FloatRect baseBounds(position, size);
+    if (baseBounds.contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
     {
         isHovered = true;
-        drawSize = size * 1.3f;
+        drawSize = size * 1.1f;
         drawPosition = position - (drawSize - size) / 2.f;
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -115,12 +114,6 @@ bool displayAnimatedButton(
     {
         isHeld = false;
     }
-
-    button.setSize(drawSize);
-    button.setPosition(drawPosition);
-
-    button.setFillColor(isClicked ? sf::Color::Green : (isHovered ? sf::Color(200, 100, 100) : sf::Color(50, 50, 150)));
-    window.draw(button);
 
     // Animate the sprite
     int frameIndex = static_cast<int>((animationClock.getElapsedTime().asSeconds() / frameDuration)) % frames.size();
@@ -143,6 +136,7 @@ bool displayAnimatedButton(
 
     return isClicked;
 }
+
 
 
 
@@ -185,7 +179,7 @@ void UI::display_entity(Game *current_level)
     int ct_players = current_level->count_players();
     int ct_enemies = current_level->count_enemies();
 
-    int position_up = 100;
+    int position_up = 0;
     int position_down = window_height - 300;
 
     // std::cout << current_level <<"\n";
