@@ -188,13 +188,27 @@ void UI::start()
 {
     clear_window();
 
-    sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("background2.png"))
+    sf::Texture backgroundTexture,backgroundTexture1,backgroundTexture2;
+    if (!backgroundTexture.loadFromFile("background.png"))
     {
         std::cerr << "Failed to load background.png\n";
         return;
     }
     sf::Sprite backgroundSprite(backgroundTexture);
+
+    if (!backgroundTexture1.loadFromFile("background1.png"))
+    {
+        std::cerr << "Failed to load background1.png\n";
+        return;
+    }
+    sf::Sprite backgroundSprite1(backgroundTexture1);
+
+    if (!backgroundTexture2.loadFromFile("background2.png"))
+    {
+        std::cerr << "Failed to load background2.png\n";
+        return;
+    }
+    sf::Sprite backgroundSprite2(backgroundTexture2);
 
     sf::Vector2u windowSize = window.getSize();
     sf::Vector2u textureSize = backgroundTexture.getSize();
@@ -236,7 +250,16 @@ void UI::start()
         }
 
         window.clear();
-        window.draw(backgroundSprite);
+
+        if( index_level == 4 )
+            window.draw(backgroundSprite2);
+        else if( index_level < 2 )
+            window.draw(backgroundSprite);
+        else 
+            window.draw(backgroundSprite1);
+
+
+
 
         player_selected = enemy_selected = -1;
 
@@ -335,15 +358,15 @@ void UI::start()
                 continue;
             }
 
-            if (player_to_attack == current_level->count_players())
+            if (player_to_attack >= current_level->count_players())
             {
                 current_level->enemy_turn();
                 current_level->show_status();
                 state = CHOSE_ACTION;
             }
-
-            if (enemy_selected != -1)
+            else if (enemy_selected != -1)
             {
+                // std::cout << player_to_attack + 1  <<  ":  "<< enemy_selected + 1 << "\n";
                 current_level->count_attack(player_to_attack + 1, enemy_selected + 1);
                 enemy_selected = -1;
                 player_to_attack++;
