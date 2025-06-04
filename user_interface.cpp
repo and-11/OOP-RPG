@@ -189,7 +189,7 @@ void UI::start()
     clear_window();
 
     sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("background.png"))
+    if (!backgroundTexture.loadFromFile("background2.png"))
     {
         std::cerr << "Failed to load background.png\n";
         return;

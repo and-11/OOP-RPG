@@ -195,7 +195,7 @@ void Game::count_item_use_player(int item, int ct_player) {
 
 void Game::reset() {
     entities.clear();
-    items.clear();
+    items.clear();   
     game_is_lost = false;
 }
 

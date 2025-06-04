@@ -111,7 +111,7 @@ void setup()
     level.reset();
 
     
-    /// lvl 4
+    /// lvl 4hhj
     x= std::make_shared<Orc>( 7 );
     level.add_creature( x );
     x= std::make_shared<Wolf>( 7 );
