@@ -355,6 +355,7 @@ void UI::start()
             if (!current_level->count_enemies())
             {
                 state = CHOSE_ACTION;
+                player_to_attack = 0;
                 continue;
             }
 
@@ -363,6 +364,7 @@ void UI::start()
                 current_level->enemy_turn();
                 current_level->show_status();
                 state = CHOSE_ACTION;
+                player_to_attack = 0;
             }
             else if (enemy_selected != -1)
             {
