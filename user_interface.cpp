@@ -1,17 +1,15 @@
 #include "user_interface.hpp"
-
 #include <map>
 
 bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const sf::Vector2f &size, const std::string &text, sf::Font &font)
 {
     static std::map<std::string, bool> holdMap;
-    std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
+    std::string key = std::to_string(static_cast<int>(position.x)) + "_" + std::to_string(static_cast<int>(position.y));
     bool &isHeld = holdMap[key];
 
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     bool isHovered = false, isClicked = false;
 
-    // Use original button area for hover detection
     sf::FloatRect baseBounds(position, size);
     if (baseBounds.contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
     {
@@ -34,7 +32,6 @@ bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const
         isHeld = false;
     }
 
-    // Compute scaled size and position if hovered
     sf::Vector2f drawSize = size;
     sf::Vector2f drawPosition = position;
     float textScale = 1.0f;
@@ -46,17 +43,14 @@ bool displayButton(sf::RenderWindow &window, const sf::Vector2f &position, const
         textScale = 1.3f;
     }
 
-    // Transparent button (use outline if you want visual feedback)
     sf::RectangleShape button(drawSize);
     button.setPosition(drawPosition);
-    button.setFillColor(sf::Color(0, 0, 0, 0)); // fully transparent
+    button.setFillColor(sf::Color(0, 0, 0, 0));
 
-    // Create and center text
     sf::Text buttonText(text, font, 32);
     buttonText.setScale(textScale, textScale);
     buttonText.setFillColor(sf::Color::White);
 
-    // Re-center text origin after scaling
     sf::FloatRect textBounds = buttonText.getLocalBounds();
     buttonText.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
     buttonText.setPosition(drawPosition.x + drawSize.x / 2.0f, drawPosition.y + drawSize.y / 2.0f);
@@ -78,17 +72,15 @@ bool displayAnimatedButton(
     float spriteScaleFactor = 5.f)
 {
     static std::map<std::string, bool> holdMap;
-    std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
+    std::string key = std::to_string(static_cast<int>(position.x)) + "_" + std::to_string(static_cast<int>(position.y));
     bool &isHeld = holdMap[key];
 
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     bool isClicked = false;
 
-    // Base values
     sf::Vector2f drawSize = size;
     sf::Vector2f drawPosition = position;
 
-    // Use hover detection on original size
     sf::FloatRect baseBounds(position, size);
     if (baseBounds.contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
     {
@@ -113,16 +105,15 @@ bool displayAnimatedButton(
         isHeld = false;
     }
 
-    // Animate the sprite
-    int frameIndex = static_cast<int>((animationClock.getElapsedTime().asSeconds() / frameDuration)) % frames.size();
+    int frameIndex = static_cast<int>((animationClock.getElapsedTime().asSeconds() / frameDuration)) % static_cast<int>(frames.size());
     sf::Sprite sprite(frames[frameIndex]);
 
     sf::Vector2u texSize = sprite.getTexture()->getSize();
 
-    float scaleX = (drawSize.x / texSize.x) * spriteScaleFactor;
-    float scaleY = (drawSize.y / texSize.y) * spriteScaleFactor;
+    float scaleX = (drawSize.x / static_cast<float>(texSize.x)) * spriteScaleFactor;
+    float scaleY = (drawSize.y / static_cast<float>(texSize.y)) * spriteScaleFactor;
 
-    sprite.setOrigin(texSize.x / 2.f, texSize.y / 2.f);
+    sprite.setOrigin(static_cast<float>(texSize.x) / 2.f, static_cast<float>(texSize.y) / 2.f);
 
     if (h_flip)
         scaleX = -scaleX;
@@ -143,18 +134,15 @@ void UI::Add_level(const Game &x)
 void UI::display_items(Game *current_level)
 {
     int ct_items = current_level->count_items();
-
     int position_up = 100;
     int position_down = window_height - 300;
 
-    // std::cout << current_level <<"\n";
-
     for (int i = 0; i < ct_items; i++)
     {
-        int position = position_up + (position_down - position_up) / std::max((ct_items - 1), 1) * i;
-        if (displayButton(window, sf::Vector2f(horizontal_offset + (window_lengt - 2 * horizontal_offset) / 3 + square_button_size, position),
+        int position = position_up + (position_down - position_up) / std::max(ct_items - 1, 1) * i;
+        if (displayButton(window, sf::Vector2f(horizontal_offset + (window_lengt - 2 * horizontal_offset) / 3.f + square_button_size, static_cast<float>(position)),
                           sf::Vector2f(200.f, 60.f),
-                          current_level->get_xth_item(i+1)->get_name(), font))
+                          current_level->get_xth_item(i + 1)->get_name(), font))
         {
             item_selected = i;
             std::cout << "item " + std::to_string(i + 1) + "\n";
@@ -170,46 +158,37 @@ void UI::display_entity(Game *current_level)
     int position_up = 0;
     int position_down = window_height - 300;
 
-    // std::cout << current_level <<"\n";
-
     sf::Vector2f sf_entity_box_size(entity_box_size, entity_box_size);
 
     for (int i = 0; i < ct_players; i++)
     {
-        int position = position_up + (position_down - position_up) / std::max((ct_players - 1), 1) * i;
+        int position = position_up + (position_down - position_up) / std::max(ct_players - 1, 1) * i;
 
-        if (displayAnimatedButton(window, sf::Vector2f(horizontal_offset , position), sf_entity_box_size,
+        if (displayAnimatedButton(window, sf::Vector2f(horizontal_offset, static_cast<float>(position)), sf_entity_box_size,
                                   current_level->get_xth_player(i + 1)->get_frames(), 0.1f, animation_clock, false,
-                                  1.3))
+                                  1.3f))
         {
             player_selected = i;
-            // std::cout << "PLAYER " + std::to_string( i ) + " clicked!\n";
         }
     }
 
     for (int i = 0; i < ct_enemies; i++)
     {
-        int position = position_up + (position_down - position_up) / std::max((ct_enemies - 1), 1) * i;
-        if (displayAnimatedButton(window, sf::Vector2f(window_lengt - horizontal_offset - 150, position), sf_entity_box_size,
+        int position = position_up + (position_down - position_up) / std::max(ct_enemies - 1, 1) * i;
+        if (displayAnimatedButton(window, sf::Vector2f(window_lengt - horizontal_offset - 150, static_cast<float>(position)), sf_entity_box_size,
                                   current_level->get_xth_enemy(i + 1)->get_frames(), 0.1f, animation_clock, true,
-                                  1.4))
+                                  1.4f))
         {
             enemy_selected = i;
-            // std::cout << "  ENEMYE " + std::to_string( i ) + " clicked!\n";
         }
     }
 }
 
 void UI::start()
 {
-
     clear_window();
 
-    // sf::RenderWindow window(sf::VideoMode(window_lengt, window_height), "OOP RPG");
-
-    // window(sf::VideoMode(window_lengt, window_height), "OOP RPG");
-
-    sf::Texture backgroundTexture; /// BACKGROUND
+    sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("background.png"))
     {
         std::cerr << "Failed to load background.png\n";
@@ -217,14 +196,11 @@ void UI::start()
     }
     sf::Sprite backgroundSprite(backgroundTexture);
 
-    // Scale
     sf::Vector2u windowSize = window.getSize();
     sf::Vector2u textureSize = backgroundTexture.getSize();
     backgroundSprite.setScale(
-        float(windowSize.x) / textureSize.x,
-        float(windowSize.y) / textureSize.y);
-
-    //////////////////////////////////////////////////////////////////////////////          ACTUALY START
+        static_cast<float>(windowSize.x) / textureSize.x,
+        static_cast<float>(windowSize.y) / textureSize.y);
 
     int index_level = 0;
 
@@ -232,7 +208,7 @@ void UI::start()
     current_level->prepare_fight();
     item_selected = -1;
 
-    int player_to_attack;
+    int player_to_attack = 0;
 
     current_level->show_status();
 
@@ -253,31 +229,28 @@ void UI::start()
         {
             window.close();
         }
-        if (index_level == int(levels.size()))
+        if (index_level == static_cast<int>(levels.size()))
         {
             won = true;
             window.close();
         }
 
-        window.clear();                // still keep this
-        window.draw(backgroundSprite); // draw background
+        window.clear();
+        window.draw(backgroundSprite);
 
         player_selected = enemy_selected = -1;
 
         if (state != USE_ITEM)
             display_entity(current_level);
 
-            
-        displayButton(window, sf::Vector2f(horizontal_offset + (window_lengt - 2 * horizontal_offset) / 3 + square_button_size, 20), sf::Vector2f(square_button_size,square_button_size),
-                          "Stage " + std::to_string(index_level + 1) , font);
+        displayButton(window, sf::Vector2f(horizontal_offset + (window_lengt - 2 * horizontal_offset) / 3.f + square_button_size, 20.f), sf::Vector2f(square_button_size, square_button_size),
+                      "Stage " + std::to_string(index_level + 1), font);
 
-
-        // std::cout << current_level->count_enemies() <<"\n";
-        if (!current_level->count_enemies()) /// next level
+        if (!current_level->count_enemies())
         {
             clear_window();
             current_level->load();
-            if (index_level < int(levels.size()) - 1)
+            if (index_level < static_cast<int>(levels.size()) - 1)
             {
                 current_level->game_transfer(levels[index_level + 1]);
                 current_level = &levels[index_level + 1];
@@ -287,6 +260,7 @@ void UI::start()
             index_level++;
             state = CHOSE_ACTION;
         }
+
         if (state == USE_ITEM)
         {
             display_items(current_level);
@@ -294,7 +268,7 @@ void UI::start()
             if (item_selected != -1)
                 state = TARGET_SELECTION_ITEM;
 
-            if (displayButton(window, sf::Vector2f(horizontal_offset + (window_lengt - 2 * horizontal_offset) / 3 + square_button_size, window_height - vertical_offset), sf::Vector2f(square_button_size, square_button_size), "Item", font))
+            if (displayButton(window, sf::Vector2f(horizontal_offset + (window_lengt - 2 * horizontal_offset) / 3.f + square_button_size, static_cast<float>(window_height - vertical_offset)), sf::Vector2f(square_button_size, square_button_size), "Item", font))
             {
                 state = CHOSE_ACTION;
             }
@@ -302,31 +276,25 @@ void UI::start()
 
         if (state == CHOSE_ACTION)
         {
-
-            if (displayButton(window, sf::Vector2f(horizontal_offset, window_height - vertical_offset), sf::Vector2f(square_button_size, square_button_size), "Attack", font))
+            if (displayButton(window, sf::Vector2f(horizontal_offset, static_cast<float>(window_height - vertical_offset)), sf::Vector2f(square_button_size, square_button_size), "Attack", font))
             {
                 state = ATTACK;
                 player_to_attack = 0;
                 enemy_selected = -1;
-
-                std::cout << "Attack \n";
             }
 
-            if (displayButton(window, sf::Vector2f(horizontal_offset + (window_lengt - 2 * horizontal_offset) / 3 + square_button_size, window_height - vertical_offset), sf::Vector2f(square_button_size, square_button_size), "Item", font))
+            if (displayButton(window, sf::Vector2f(horizontal_offset + (window_lengt - 2 * horizontal_offset) / 3.f + square_button_size, static_cast<float>(window_height - vertical_offset)), sf::Vector2f(square_button_size, square_button_size), "Item", font))
             {
                 state = USE_ITEM;
-
-                std::cout << "Select item " << " \n";
                 current_level->show_items();
             }
 
-            if (displayButton(window, sf::Vector2f(window_lengt - horizontal_offset - square_button_size, window_height - vertical_offset), sf::Vector2f(square_button_size, square_button_size), "Info", font))
+            if (displayButton(window, sf::Vector2f(window_lengt - horizontal_offset - square_button_size, static_cast<float>(window_height - vertical_offset)), sf::Vector2f(square_button_size, square_button_size), "Info", font))
             {
                 state = SEE_DETAILS;
-
-                std::cout << "See details " << " \n";
             }
         }
+
         if (state == SEE_DETAILS)
         {
             if (enemy_selected != -1)
@@ -340,7 +308,6 @@ void UI::start()
         {
             if (player_selected != -1)
             {
-                std::cout << item_selected + 1 << " " << player_selected + 1 << "\n";
                 current_level->count_item_use_player(item_selected + 1, player_selected + 1);
                 state = CHOSE_ACTION;
                 item_selected = -1;
@@ -356,9 +323,10 @@ void UI::start()
                 current_level->show_status();
             }
         }
+
         if (state == ATTACK)
         {
-            displayButton(window, sf::Vector2f(window_lengt / 2 - 400, window_height - vertical_offset), sf::Vector2f(600.f, 60.f),
+            displayButton(window, sf::Vector2f(window_lengt / 2.f - 400.f, static_cast<float>(window_height - vertical_offset)), sf::Vector2f(600.f, 60.f),
                           "Chose a target for " + std::to_string(player_to_attack + 1) + " to attack", font);
 
             if (!current_level->count_enemies())
@@ -376,9 +344,7 @@ void UI::start()
 
             if (enemy_selected != -1)
             {
-                std::cout << player_to_attack + 1 << "   " << enemy_selected + 1 << "\n";
                 current_level->count_attack(player_to_attack + 1, enemy_selected + 1);
-
                 enemy_selected = -1;
                 player_to_attack++;
             }
