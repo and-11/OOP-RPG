@@ -8,6 +8,6 @@ class Skeleton : public Enemy {
 public:
     static std::string e_name;
 
-    explicit Skeleton(int level);
+    explicit Skeleton(int lvl);
     void show_informations() override;
 };
