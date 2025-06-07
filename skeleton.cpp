@@ -3,7 +3,7 @@
 std::string Skeleton::e_name = "SKELETON";
 
 Skeleton::Skeleton(int lvl)
-    : Enemy(level, 3, 1, e_name, 1, 1)
+    : Enemy(lvl, 3, 1, e_name, 1, 1)
 {
     /// ANIMATION
     this->add_frames(4, "skeleton_walk_frames");
