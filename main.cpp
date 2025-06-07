@@ -1,136 +1,178 @@
-#include <iostream>
-#include <array>
-#include <chrono>
-#include <thread>
+#include "libraries.hpp"
+#include "functions.hpp"
+#include "random.hpp"
 
-#include <SFML/Graphics.hpp>
+#include "game.hpp"
+#include "user_interface.hpp"
 
-#include <Helper.h>
+#include "entity.hpp"
+#include "player.hpp"
+#include "player_builder.hpp"
 
-//////////////////////////////////////////////////////////////////////
-/// NOTE: this include is needed for environment-specific fixes     //
-/// You can remove this include and the call from main              //
-/// if you have tested on all environments, and it works without it //
-#include "env_fixes.h"                                              //
-//////////////////////////////////////////////////////////////////////
+#include "item.hpp"
+#include "potion.hpp"
+
+#include "goblin.hpp"
+#include "skeleton.hpp"
+#include "wolf.hpp"
+#include "orc.hpp"
+#include "crow.hpp"
+
+#include "exception.hpp"
+
+void setup()
+{
+    UI joc;
+
+    Game level;
+
+    std::string name;
+    std::shared_ptr<Entity> x;
+    std::shared_ptr<Item> y;
+
+    /// PLAYERS
+    ///
+    Player_Builder_Director director;
+    std::shared_ptr< Player_Builder > player_builder;
+
+    player_builder = std::make_shared<Knight_Player_Builder>() ;
+    director.set_player_builder( player_builder );
+    director.build_player();
+    x = director.get_player();
+    level.add_creature( x );
+
+    player_builder = std::make_shared<Archer_Player_Builder>() ;
+    director.set_player_builder( player_builder );
+    director.build_player();
+    x = director.get_player();
+    level.add_creature( x );
+
+    player_builder = std::make_shared<Shield_Player_Builder>() ;
+    director.set_player_builder( player_builder );
+    director.build_player();
+    x = director.get_player();
+    level.add_creature( x );
+
+    /// POTIONS
+    name = "Healing";
+    y = std::make_shared<Potion>( name,-1,25 );
+    level.add_item( y );
+
+    name = "Lightning";
+    y = std::make_shared<Potion>( name,0,-30 );
+    level.add_item( y );
+
+    name = "Increase Stats";
+    y = std::make_shared<Potion>( name,7,12 );
+    level.add_item( y );
 
 
-//////////////////////////////////////////////////////////////////////
-/// This class is used to test that the memory leak checks work as expected even when using a GUI
-class SomeClass {
-public:
-    explicit SomeClass(int) {}
-};
+    /// ENEMIES
 
-SomeClass *getC() {
-    return new SomeClass{2};
+////
+
+    /// lvl 1
+    x= std::make_shared<Skeleton>( 2 );
+    level.add_creature( x );
+    x= std::make_shared<Crow>( 3 );
+    level.add_creature( x );
+    x= std::make_shared<Skeleton>( 1 );
+    level.add_creature( x );
+    x= std::make_shared<Wolf>( 2 );
+    level.add_creature( x );
+
+    joc.Add_level(level);
+    level.reset();
+
+    // /// lvl 2
+    x= std::make_shared<Orc>( 5 );
+    level.add_creature( x );
+    x= std::make_shared<Goblin>( 3 );
+    level.add_creature( x );
+
+    joc.Add_level(level);
+    level.reset();
+
+    /// lvl 3
+    x= std::make_shared<Wolf>( 2 );
+    level.add_creature( x );
+    x= std::make_shared<Skeleton>( 1 );
+    level.add_creature( x );
+    x= std::make_shared<Wolf>( 1 );
+    level.add_creature( x );
+    x= std::make_shared<Skeleton>( 2 );
+    level.add_creature( x );
+    x= std::make_shared<Skeleton>( 2 );
+    level.add_creature( x );
+    x= std::make_shared<Orc>( 2 );
+    level.add_creature( x );
+
+    joc.Add_level(level);
+    level.reset();
+
+    
+    /// lvl 4hhj
+    x= std::make_shared<Orc>( 7 );
+    level.add_creature( x );
+    x= std::make_shared<Wolf>( 7 );
+    level.add_creature( x );
+    
+    joc.Add_level(level);
+    level.reset();
+    
+    /// lvl 5
+    x= std::make_shared<Goblin>( 83 );
+    level.add_creature( x );
+
+    joc.Add_level(level);
+    level.reset();
+
+    ///     -   --- -   -   -   -   -   -   --  -   -
+
+    joc.start();
+    x.reset();
+    y.reset();
 }
-//////////////////////////////////////////////////////////////////////
 
+#define PLAYER                      /// NO PLAY --------------> commentate
 
-int main() {
-    ////////////////////////////////////////////////////////////////////////
-    /// NOTE: this function call is needed for environment-specific fixes //
-    init_threads();                                                       //
-    ////////////////////////////////////////////////////////////////////////
-    ///
-    std::cout << "Hello, world!\n";
-    std::array<int, 100> v{};
-    int nr;
-    std::cout << "Introduceți nr: ";
-    /////////////////////////////////////////////////////////////////////////
-    /// Observație: dacă aveți nevoie să citiți date de intrare de la tastatură,
-    /// dați exemple de date de intrare folosind fișierul tastatura.txt
-    /// Trebuie să aveți în fișierul tastatura.txt suficiente date de intrare
-    /// (în formatul impus de voi) astfel încât execuția programului să se încheie.
-    /// De asemenea, trebuie să adăugați în acest fișier date de intrare
-    /// pentru cât mai multe ramuri de execuție.
-    /// Dorim să facem acest lucru pentru a automatiza testarea codului, fără să
-    /// mai pierdem timp de fiecare dată să introducem de la zero aceleași date de intrare.
-    ///
-    /// Pe GitHub Actions (bife), fișierul tastatura.txt este folosit
-    /// pentru a simula date introduse de la tastatură.
-    /// Bifele verifică dacă programul are erori de compilare, erori de memorie și memory leaks.
-    ///
-    /// Dacă nu puneți în tastatura.txt suficiente date de intrare, îmi rezerv dreptul să vă
-    /// testez codul cu ce date de intrare am chef și să nu pun notă dacă găsesc vreun bug.
-    /// Impun această cerință ca să învățați să faceți un demo și să arătați părțile din
-    /// program care merg (și să le evitați pe cele care nu merg).
-    ///
-    /////////////////////////////////////////////////////////////////////////
-    std::cin >> nr;
-    /////////////////////////////////////////////////////////////////////////
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "v[" << i << "] = ";
-        std::cin >> v[i];
-    }
-    std::cout << "\n\n";
-    std::cout << "Am citit de la tastatură " << nr << " elemente:\n";
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "- " << v[i] << "\n";
-    }
-    ///////////////////////////////////////////////////////////////////////////
-    /// Pentru date citite din fișier, NU folosiți tastatura.txt. Creați-vă voi
-    /// alt fișier propriu cu ce alt nume doriți.
-    /// Exemplu:
-    /// std::ifstream fis("date.txt");
-    /// for(int i = 0; i < nr2; ++i)
-    ///     fis >> v2[i];
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    ///                Exemplu de utilizare cod generat                     ///
-    ///////////////////////////////////////////////////////////////////////////
-    Helper helper;
-    helper.help();
-    ///////////////////////////////////////////////////////////////////////////
+int main()
+{
+    std::string input_string;
+    clear_window();
+    std::cout << "WELCOME!\npress: S -to start or Q - to quit\n";
+    while( true )
+    {
+        input_string = 's';
+        
+        #ifdef PLAYER
+            std::cin >> input_string;           /// PLAY
+        #endif
+        
+        char option = input_string[0];
+        option = std::tolower( option );    
 
-    SomeClass *c = getC();
-    std::cout << c << "\n";
-    delete c;
-
-    sf::RenderWindow window;
-    ///////////////////////////////////////////////////////////////////////////
-    /// NOTE: sync with env variable APP_WINDOW from .github/workflows/cmake.yml:31
-    window.create(sf::VideoMode({800, 700}), "My Window", sf::Style::Default);
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    /// NOTE: mandatory use one of vsync or FPS limit (not both)            ///
-    /// This is needed so we do not burn the GPU                            ///
-    window.setVerticalSyncEnabled(true);                                    ///
-    /// window.setFramerateLimit(60);                                       ///
-    ///////////////////////////////////////////////////////////////////////////
-
-    while(window.isOpen()) {
-        bool shouldExit = false;
-        sf::Event e{};
-        while(window.pollEvent(e)) {
-            switch(e.type) {
-            case sf::Event::Closed:
-                window.close();
+        try{
+            if( option == 's' and input_string.size()==1  )
+            {
+                setup();
                 break;
-            case sf::Event::Resized:
-                std::cout << "New width: " << window.getSize().x << '\n'
-                          << "New height: " << window.getSize().y << '\n';
-                break;
-            case sf::Event::KeyPressed:
-                std::cout << "Received key " << (e.key.code == sf::Keyboard::X ? "X" : "(other)") << "\n";
-                if(e.key.code == sf::Keyboard::Escape)
-                    shouldExit = true;
-                break;
-            default:
+            } 
+            else if( option == 'q' and input_string.size()==1 )
+            {
                 break;
             }
+            else 
+                throw Input_Invalid();
         }
-        if(shouldExit) {
-            window.close();
-            break;
+        catch( MyException &e ){
+            std::cout << e.what() << "\n";
         }
-        using namespace std::chrono_literals;
-        std::this_thread::sleep_for(300ms);
-
-        window.clear();
-        window.display();
     }
-    return 0;
 }
+
+
+
+
+
+

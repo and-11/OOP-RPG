@@ -52,6 +52,22 @@ endif()
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME}
     main.cpp
+    enemy.cpp
+    entity.cpp
+    exception.cpp
+    functions.cpp
+    game.cpp
+    visitor.cpp
+    goblin.cpp 
+    item.cpp
+    orc.cpp 
+    player.cpp 
+    player_builder.cpp
+    potion.cpp 
+    skeleton.cpp 
+    user_interface.cpp 
+    wolf.cpp 
+    crow.cpp
     generated/src/Helper.cpp
     env_fixes.h
 )
