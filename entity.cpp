@@ -37,7 +37,7 @@ void Entity::add_frames( int number_of_frames,std::string path )
     {
          
         sf::Texture frame;
-        if (!frame.loadFromFile( path + "/tile00" + std::to_string(i) + ".png")) {
+        if (!frame.loadFromFile( "../assets/" + path + "/tile00" + std::to_string(i) + ".png")) {
             std::cerr << name << ": failed to load frame " << i << "\n";
             // return ;
         }   
