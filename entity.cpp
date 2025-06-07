@@ -54,18 +54,17 @@ Entity::Entity() : name{"Forgotten"} {
     player = false;
 }
 
-Entity::Entity(int level, int damage, int health, const std::string& name, int c_damage, int c_health) {
-    this->level = level;
-    this->damage = damage;
-    this->health = health;
-    this->current_health = 0;
-    this->current_damage = 0;
-    this->coefficient_damage = c_damage;
-    this->coefficient_health = c_health;
-    this->name = name;
-    this->player = false;
-}
-
+Entity::Entity(int level, int damage, int health, const std::string& name, int c_damage, int c_health):
+    level(level),
+    damage(damage),
+    health(health),
+    current_health(0),
+    current_damage(0),
+    coefficient_damage(c_damage),
+    coefficient_health(c_health),
+    name(name),
+    player(false) 
+    {}
 
 Entity::Entity(const Entity& other) : name(other.name) {
     level = other.level;
@@ -91,9 +90,9 @@ Entity& Entity::operator=(const Entity& other) {
     return *this;
 }
 
-bool Entity::is_alive() const {
-    return current_health > 0;
-}
+// bool Entity::is_alive() const {
+//     return current_health > 0;
+// }
 bool Entity::accept_visit(visitor_alive vis) {
     return vis.visit_is_alive( this );
 }

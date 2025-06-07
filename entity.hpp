@@ -37,7 +37,7 @@ public:
 
     Entity(int level, int damage, int health, const std::string& name, int c_damage, int c_health);
 
-    [[nodiscard]] bool is_alive() const;
+    // [[nodiscard]] bool is_alive() const;
     [[nodiscard]] bool is_player() const;
     [[nodiscard]] int get_damage() const;
     [[nodiscard]] std::string get_name() const;

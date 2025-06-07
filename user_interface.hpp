@@ -26,7 +26,7 @@ private:
     const int window_height = 750;
     int player_selected = 0;
     int enemy_selected = 0;
-    int item_selected;
+    int item_selected = 0;
     STATES state;
 
     sf::RenderWindow window;

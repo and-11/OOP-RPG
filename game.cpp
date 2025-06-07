@@ -9,9 +9,9 @@ Game::~Game() {
     items.clear();
 }
 
-[[nodiscard]] bool Game::is_game_lost() const {
-    return game_is_lost;
-}
+// [[nodiscard]] bool Game::is_game_lost() const {
+//     return game_is_lost;
+// }
 
 [[nodiscard]] bool Game::accept_visit( visitor_is_over vis ) {
     return vis.visit_is_game_over(this);
@@ -163,19 +163,19 @@ bool Game::is_over() {
     return false;
 }
 
-std::string Game::th_player_name(int i) {
-    try {
-        int ct = 0;
-        for (const auto& x : entities)
-            if (x->accept_visit(vis) && x->is_player()) {
-                ct++;
-                if (ct == i) return x->get_name();
-            }
-        throw Input_Invalid();
-    } catch (MyException& e) {
-        return e.what();
-    }
-}
+// std::string Game::th_player_name(int i) {
+//     try {
+//         int ct = 0;
+//         for (const auto& x : entities)
+//             if (x->accept_visit(vis) && x->is_player()) {
+//                 ct++;
+//                 if (ct == i) return x->get_name();
+//             }
+//         throw Input_Invalid();
+//     } catch (MyException& e) {
+//         return e.what();
+//     }
+// }
 
 void Game::show_enemy_details(int ct) {
     auto ent = get_xth_enemy(ct);

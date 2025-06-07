@@ -19,7 +19,7 @@ public:
 
     [[nodiscard]] bool accept_visit( visitor_is_over vis );
 
-    [[nodiscard]] bool is_game_lost() const;
+    // [[nodiscard]] bool is_game_lost() const;
     [[nodiscard]] int count_players() const;
     [[nodiscard]] int count_enemies() const;
     [[nodiscard]] int count_items() const;
@@ -44,7 +44,7 @@ public:
     void enemy_turn();
     bool is_over();
 
-    std::string th_player_name(int i);
+    // std::string th_player_name(int i);
     void show_enemy_details(int ct);
 
     void count_item_use_enemy(int i, int ct_enemy);
