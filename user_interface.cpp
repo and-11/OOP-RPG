@@ -188,33 +188,33 @@ void UI::start()
 {
     clear_window();
 
-    sf::Texture backgroundTexture,backgroundTexture1,backgroundTexture2;
-    if (!backgroundTexture.loadFromFile("background.png"))
-    {
-        std::cerr << "Failed to load background.png\n";
-        return;
-    }
-    sf::Sprite backgroundSprite(backgroundTexture);
+    // sf::Texture backgroundTexture,backgroundTexture1,backgroundTexture2;
+    // if (!backgroundTexture.loadFromFile("background.png"))
+    // {
+    //     std::cerr << "Failed to load background.png\n";
+    //     return;
+    // }
+    // sf::Sprite backgroundSprite(backgroundTexture);
 
-    if (!backgroundTexture1.loadFromFile("background1.png"))
-    {
-        std::cerr << "Failed to load background1.png\n";
-        return;
-    }
-    sf::Sprite backgroundSprite1(backgroundTexture1);
+    // if (!backgroundTexture1.loadFromFile("background1.png"))
+    // {
+    //     std::cerr << "Failed to load background1.png\n";
+    //     return;
+    // }
+    // sf::Sprite backgroundSprite1(backgroundTexture1);
 
-    if (!backgroundTexture2.loadFromFile("background2.png"))
-    {
-        std::cerr << "Failed to load background2.png\n";
-        return;
-    }
-    sf::Sprite backgroundSprite2(backgroundTexture2);
+    // if (!backgroundTexture2.loadFromFile("background2.png"))
+    // {
+    //     std::cerr << "Failed to load background2.png\n";
+    //     return;
+    // }
+    // sf::Sprite backgroundSprite2(backgroundTexture2);
 
-    sf::Vector2u windowSize = window.getSize();
-    sf::Vector2u textureSize = backgroundTexture.getSize();
-    backgroundSprite.setScale(
-        static_cast<float>(windowSize.x) / textureSize.x,
-        static_cast<float>(windowSize.y) / textureSize.y);
+    // sf::Vector2u windowSize = window.getSize();
+    // sf::Vector2u textureSize = backgroundTexture.getSize();
+    // backgroundSprite.setScale(
+    //     static_cast<float>(windowSize.x) / textureSize.x,
+    //     static_cast<float>(windowSize.y) / textureSize.y);
 
     int index_level = 0;
 
@@ -251,12 +251,12 @@ void UI::start()
 
         window.clear();
 
-        if( index_level == 4 )
-            window.draw(backgroundSprite2);
-        else if( index_level < 2 )
-            window.draw(backgroundSprite);
-        else 
-            window.draw(backgroundSprite1);
+        // if( index_level == 4 )
+        //     window.draw(backgroundSprite2);
+        // else if( index_level < 2 )
+        //     window.draw(backgroundSprite);
+        // else 
+        //     window.draw(backgroundSprite1);
 
 
 
