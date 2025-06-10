@@ -20,7 +20,7 @@ protected:
 public:
     void set_level(int level);
     void set_damage(int damage);
-    void set_health(int health);
+    void set_health(const int & new_health);
     void set_name(const std::string& name);
     void set_player(bool player);
     void set_coefficient_damage(int coefficient_damage);
