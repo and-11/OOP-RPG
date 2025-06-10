@@ -16,9 +16,6 @@ The project is configured with CMake.
   cd build
   cmake ..
   make
-```
-  add the files from assets to the build folder
-```sh
   ./oop
 ```
 ### option II
