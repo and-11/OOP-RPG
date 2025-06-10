@@ -4,7 +4,7 @@ Item::Item() = default;
 
 Item::Item(const std::string& s) : name{s} {}
 
-std::string Item::get_name() const {
+const std::string & Item::get_name() const {
     return name ;
 }
 

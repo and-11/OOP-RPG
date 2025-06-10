@@ -11,7 +11,7 @@ bool visitor_alive::visit_is_alive( const Entity * x ) {
     return x->get_current_health() > 0;
 }
 
-bool visitor_is_over::visit_is_game_over( const Game * x ) {
+bool visitor_is_over::visit_is_game_over( Game * x ) {
     return x->is_over();
 }
 

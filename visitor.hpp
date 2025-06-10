@@ -15,5 +15,5 @@ public:
 //
 class visitor_is_over : public visitor {
 public:
-    bool visit_is_game_over( const Game * x );
+    bool visit_is_game_over( Game * x );
 };

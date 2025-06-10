@@ -15,7 +15,7 @@ public:
 
     virtual void use(Entity& dude) = 0;
 
-    [[nodiscard]] std::string get_name() const;
+    [[nodiscard]] const std::string & get_name() const;
 
     virtual void print(std::ostream& os) const;
 
