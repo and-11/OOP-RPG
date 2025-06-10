@@ -27,7 +27,7 @@ void Entity::set_player(bool player) {
     return this->current_health;
 }
 
-std::vector<sf::Texture> Entity::get_frames() const {
+const std::vector<sf::Texture>& Entity::get_frames() const {
     return frames;
 }
 

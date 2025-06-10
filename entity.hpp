@@ -28,7 +28,7 @@ public:
 
     void add_frames( int number_of_frames,std::string path );
     
-    std::vector<sf::Texture> get_frames() const;
+    const std::vector<sf::Texture>& get_frames() const;
 
     Entity(); 
     Entity(const Entity& other);
