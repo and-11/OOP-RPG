@@ -64,8 +64,8 @@ void Shield_Player_Builder::build_player() {
 
 
 
-void Player_Builder_Director::set_player_builder(std::shared_ptr<Player_Builder> player_builder) {
-    this->player_builder = player_builder;
+void Player_Builder_Director::set_player_builder(std::shared_ptr<Player_Builder> new_player_builder) {
+    this->player_builder = new_player_builder;
 }
 
 void Player_Builder_Director::build_player() {

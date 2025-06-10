@@ -18,8 +18,8 @@ void Entity::set_level(int new_level) {
 void Entity::set_name(const std::string& new_name) {
     this->name = new_name;
 }
-void Entity::set_player(bool player) {
-    this->player = player;
+void Entity::set_player(bool new_player) {
+    this->player = new_player;
 }
 
 
