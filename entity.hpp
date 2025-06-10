@@ -26,7 +26,7 @@ public:
     void set_coefficient_damage(int coefficient_damage);
     void set_coefficient_health(int coefficient_health);
 
-    void add_frames( int number_of_frames,std::string path );
+    void add_frames( int number_of_frames,const std::string & path );
     
     const std::vector<sf::Texture>& get_frames() const;
 

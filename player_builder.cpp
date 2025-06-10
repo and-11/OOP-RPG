@@ -2,9 +2,8 @@
 
 
 
-Player_Builder::Player_Builder() {
-    player = std::make_shared<Player>();
-}
+Player_Builder::Player_Builder() : player(std::make_shared<Player>()) {}
+
 [[nodiscard]] std::shared_ptr<Player> Player_Builder::get_player() const {
     return player;
 }

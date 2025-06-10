@@ -31,7 +31,7 @@ const std::vector<sf::Texture>& Entity::get_frames() const {
     return frames;
 }
 
-void Entity::add_frames( int number_of_frames,std::string path )
+void Entity::add_frames( int number_of_frames,const std::string & path )
 {
     this->frames.clear(); /// ajuta la build
     for(int i = 0; i < number_of_frames; i++)
