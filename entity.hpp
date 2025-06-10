@@ -28,7 +28,7 @@ public:
 
     void add_frames( int number_of_frames,std::string path );
     
-    std::vector<sf::Texture> get_frames();
+    std::vector<sf::Texture> get_frames() const;
 
     Entity(); 
     Entity(const Entity& other);
@@ -48,7 +48,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Entity& dude);
     friend class Potion;
-    int get_current_health();
+    [[nodiscard]] int get_current_health() const;
     bool accept_visit(visitor_alive vis);
 
 };

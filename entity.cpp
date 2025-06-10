@@ -22,11 +22,12 @@ void Entity::set_player(bool player) {
     this->player = player;
 }
 
-int Entity::get_current_health() {
+
+[[nodiscard]] int Entity::get_current_health() const {
     return this->current_health;
 }
 
-std::vector<sf::Texture> Entity::get_frames(){
+std::vector<sf::Texture> Entity::get_frames() const {
     return frames;
 }
 
