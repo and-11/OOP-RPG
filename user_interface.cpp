@@ -189,21 +189,21 @@ void UI::start()
     clear_window();
 
     sf::Texture backgroundTexture,backgroundTexture1,backgroundTexture2;
-    if (!backgroundTexture.loadFromFile("background.png"))
+    if (!backgroundTexture.loadFromFile("../assets/background.png"))
     {
         std::cerr << "Failed to load background.png\n";
         return;
     }
     sf::Sprite backgroundSprite(backgroundTexture);
 
-    if (!backgroundTexture1.loadFromFile("background1.png"))
+    if (!backgroundTexture1.loadFromFile("../assets/background2.png"))
     {
         std::cerr << "Failed to load background1.png\n";
         return;
     }
     sf::Sprite backgroundSprite1(backgroundTexture1);
 
-    if (!backgroundTexture2.loadFromFile("background2.png"))
+    if (!backgroundTexture2.loadFromFile("../assets/background3.png"))
     {
         std::cerr << "Failed to load background2.png\n";
         return;
