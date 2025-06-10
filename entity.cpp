@@ -6,7 +6,7 @@ void Entity::set_coefficient_damage(int c_damage) {
 void Entity::set_coefficient_health(int coefficient_health) {
     this->coefficient_health = coefficient_health;
 }
-void Entity::set_health(const int & new_health) {
+void Entity::set_health(const int new_health) {
     this->health = new_health;
 }
 void Entity::set_damage(int damage) {
