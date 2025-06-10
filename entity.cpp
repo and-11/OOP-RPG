@@ -3,20 +3,20 @@
 void Entity::set_coefficient_damage(int c_damage) {
     this->coefficient_damage = c_damage;
 }
-void Entity::set_coefficient_health(int coefficient_health) {
-    this->coefficient_health = coefficient_health;
+void Entity::set_coefficient_health(int new_coefficient_health) {
+    this->coefficient_health = new_coefficient_health;
 }
 void Entity::set_health(const int new_health) {
     this->health = new_health;
 }
-void Entity::set_damage(int damage) {
-    this->damage = damage;
+void Entity::set_damage(int new_damage) {
+    this->damage = new_damage;
 }
-void Entity::set_level(int level) {
-    this->level = level;
+void Entity::set_level(int new_level) {
+    this->level = new_level;
 }
-void Entity::set_name(const std::string& name) {
-    this->name = name;
+void Entity::set_name(const std::string& new_name) {
+    this->name = new_name;
 }
 void Entity::set_player(bool player) {
     this->player = player;
